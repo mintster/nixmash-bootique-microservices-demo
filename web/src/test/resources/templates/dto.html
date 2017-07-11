@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>{{ pageinfo.page_title }}</title>
+    {{#pageinfo.inDevelopmentMode}}
+        <meta name='page_id' content='{{ pageinfo.page_id }}'/>
+        <meta name='page_key' content='{{ pageinfo.page_key }}'/>
+    {{/pageinfo.inDevelopmentMode}}
+</head>
+<body>
+<h1>{{ pageinfo.heading }}</h1>
+<p>{{ pageinfo.subheading }}</p>
+</body>
+</html>

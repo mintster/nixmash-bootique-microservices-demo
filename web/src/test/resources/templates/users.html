@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Users Test Page</title>
+</head>
+<body>
+
+
+<!-- Page Content -->
+<div class="container content">
+    <div class="row col-lg-12">
+        <h1>Say Hello to Our Users</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="row col-lg-12">
+        <!-- will be empty on Mock /users -->
+        {{#users}}
+        <h3>{{userName}}</h3>
+        <p>Say Hello to {{displayName}}</p>
+        {{/users}}
+    </div>
+</div>
+
+
+</body>
+</html>

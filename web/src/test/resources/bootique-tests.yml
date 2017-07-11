@@ -1,0 +1,14 @@
+jetty:
+  connector:
+    port: 9001
+
+mvc:
+  templateBase: "classpath:"
+
+log:
+  useLogbackConfig: true
+
+jersey:
+  urlPattern: /*
+
+

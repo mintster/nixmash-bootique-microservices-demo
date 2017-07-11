@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<connections>
+	<connection>
+		<name>mysql.janglesdb</name>
+		<environment>mysql</environment>
+		<username>dbuser</username>
+		<password>password</password>
+		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
+		<database>janglesdb</database>
+	</connection>
+	<connection>
+		<name>mysql.janglestestdb</name>
+		<environment>mysql</environment>
+		<username>dbuser</username>
+		<password>password</password>
+		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
+		<database>janglestestdb</database>
+	</connection>
+</connections>

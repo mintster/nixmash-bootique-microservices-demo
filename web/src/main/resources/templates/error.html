@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> templates/partials/header.html }}
+</head>
+<body>
+
+<!-- Navigation -->
+{{> templates/partials/navbar.html }}
+
+<!-- Page Content -->
+<div class="container content">
+    <div class="row col-lg-12">
+        <h1>{{ pageinfo.heading }}</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="row col-lg-12">
+        <h3>Error Reported</h3>
+        <p class="exception">An exception has occured while retrieving your data. The exception information is: </p>
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ errorMessage }}
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+{{> templates/partials/footer.html }}
+
+</body>
+</html>

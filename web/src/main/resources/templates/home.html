@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> templates/partials/header.html }}
+</head>
+<body>
+
+<!-- Navigation -->
+{{> templates/partials/navbar.html }}
+
+<!-- Jumbotron -->
+<div class="jumbotron">
+    <div class="container">
+        <h1>{{jumbotronTitle}}</h1>
+        <h3>{{jumbotronSubtitle}}</h3>
+        <div class="row">
+            <div class="col-lg-12"><br/></div>
+        </div>
+        <p>
+            <a class="btn btn-primary btn-lg" href="https://github.com/mintster/nixmash-microservices" role="button">View Project on GitHub</a>
+        </p>
+
+        <div class="row">
+            <div class="col-lg-12"><br/><br/></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <blockquote>
+            <p>
+                Technologies used in the Cloud Application
+            </p>
+            <small>NixMash Jangles -- <em>application backend for configuration and shared POJOs <a href="https://github.com/mintster/jangles">on GitHub</a></em></small>
+            <small>Bootique -- <em>a module-based, minimally opinionated Java Framework. <a href="http://bootique.io/">Home Page.</a></em></small>
+            <small>Jersey -- <em>JAX-RS Reference Implementation for consuming RESTful Services</em></small>
+            <small>Jackson -- <em>suite of data-processing tools for Java for data-binding, streaming and annotating JSON and other data types for JAX-RS</em></small>
+            <small>Jetty -- <em>embedded web services</em></small>
+            <small>Google Guice -- <em>lightweight dependency injection framework </em></small>
+            <small>Mustache -- <em>fast, 'logic-free' tag templating engine. Using the Spullara Java Mustache Implementation <a href="https://github.com/spullara/mustache.java">on GitHub</a></em></small>
+            <small>Bootstrap -- <em>responsive theming</em></small>
+        </blockquote>
+    </div>
+</div>
+
+<!-- Footer -->
+{{> templates/partials/footer.html }}
+
+</body>
+</html>

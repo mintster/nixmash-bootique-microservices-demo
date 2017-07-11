@@ -1,0 +1,34 @@
+body {
+    padding-top: 50px;
+}
+
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+    background-color: #999;
+}
+
+/*<editor-fold desc="Jumbotron">*/
+
+blockquote small {
+    color: #716561;
+}
+
+/*</editor-fold>*/
+
+/*<editor-fold desc="Page Title and Sponsor area">*/
+
+.container.content {
+    margin-top: 60px;
+}
+.page-header h1 {
+    font-size: 4em;
+}
+.sponsor img {
+    max-width: 195px;
+}
+/*</editor-fold>*/
+
+/*<editor-fold desc="Error Page">*/
+p.exception {
+    padding: 20px 0;
+}
+/*</editor-fold>*/

@@ -1,0 +1,28 @@
+<configuration>
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <!-- To enable JMX Management -->
+    <jmxConfigurator/>
+
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%3p} ${PID:- } --- [%10.10t]  %-30.30logger{39} : %m%n}"/>
+
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="com.nixmash.jangles" level="info"/>
+    <logger name="com.nixmash.userservice.service" level="info"/>
+    <logger name="org.apache.jcs.engine" level="off"/>
+
+    <root level="off">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>
