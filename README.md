@@ -1,4 +1,4 @@
-NixMash Cloud
+NixMash Microservices
 ============
 
 - **NixMash Jangles** - small backend for cloud configuration and shared components [(GitHub)](https://github.com/mintster/jangles)
@@ -10,7 +10,7 @@ NixMash Cloud
 - **Mustache** - the Spullara Java Mustache Implementation for "logic free" templating [(GitHub)](https://github.com/spullara/mustache.java)
 - **Bootstrap** - responsive web theming
 
-## Installation and Setup
+## Installation
 
 See the [Jangles](https://github.com/mintster/jangles) README for instructions on setting up the MySQL datasources for Development and Testing. This includes running **schema.sql** and **data.sql** scripts and defining the MySQL data connections in a `connections.xml` external property file. 
 
@@ -66,7 +66,7 @@ The JSON output at `http://localhost:8000/users` would look like this.
         "lastUpdated": "06-12-2017 09:00:21",
         "isActive": true,
         "link": "http://localhost:8000/users/2"
-    }...
+    }
 ]
 ```
 
