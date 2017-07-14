@@ -1,7 +1,7 @@
 package com.nixmash.userservice;
 
 import com.nixmash.userservice.core.UserServiceConfig;
-import io.bootique.test.BQTestRuntime;
+import io.bootique.BQRuntime;
 import io.bootique.test.junit.BQTestFactory;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,12 +21,12 @@ public class ModuleTest {
 
     @Test
     public void testRuntime() {
-        BQTestRuntime runtime = testFactory.app("--server", "--config=classpath:bootique-tests.yml")
+        BQRuntime runtime = testFactory.app("--server", "--config=classpath:bootique-tests.yml")
                 .autoLoadModules()
                 .module(binder -> binder.bind(UserServiceConfig.class))
                 .createRuntime();
 
-        UserServiceConfig config = runtime.getRuntime().getInstance(UserServiceConfig.class);
+        UserServiceConfig config = runtime.getInstance(UserServiceConfig.class);
         assertTrue(config.applicationId.contains("test"));
 
     }

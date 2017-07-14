@@ -70,12 +70,9 @@ public class WebUI implements Serializable {
             int page_id = Integer.parseInt(fields[0]);
             String page_key = fields[1];
             String page_title = String.format("%s : %s", webContext.config().pageTitlePrefix, fields[2]);
-            String heading = null;
-            String subheading = null;
-            String menu = null;
-            heading = fields[3].equals(NULL_FIELD) ? null : fields[3];
-            subheading = fields[4].equals(NULL_FIELD) ? null : fields[4];
-            menu = fields[5].equals(NULL_FIELD) ? null : fields[5];
+            String heading = fields[3].equals(NULL_FIELD) ? null : fields[3];
+            String subheading = fields[4].equals(NULL_FIELD) ? null : fields[4];
+            String menu = fields[5].equals(NULL_FIELD) ? null : fields[5];
             PageInfo pageInfo = PageInfo.getBuilder(page_id, page_key, page_title)
                     .heading(heading)
                     .subheading(subheading)

@@ -18,7 +18,6 @@
 
     <logger name="com.nixmash.jangles" level="off"/>
     <logger name="com.nixmash.userservice" level="info"/>
-    <!--<logger name="io.bootique" level="off"/>-->
     <root level="off">
         <appender-ref ref="console"/>
     </root>

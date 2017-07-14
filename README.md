@@ -10,6 +10,14 @@ NixMash Microservices
 - **Mustache** - the Spullara Java Mustache Implementation for "logic free" templating [(GitHub)](https://github.com/spullara/mustache.java)
 - **Bootstrap** - responsive web theming
 
+## NixMash Posts by Branch
+
+ ### microservices-v0.1.0
+ 
+ - [Retrieving REST Data Object Lists with Jersey and Jackson ](http://nixmash.com/post/retrieving-rest-data-object-lists-with-jersey-and-jackson)
+ - [Microservice Applications with Bootique](http://nixmash.com/post/microservice-applications-with-bootique)
+ - [REST Notes: JAX-RS, Jersey and Jackson](http://nixmash.com/post/rest-notes-jax-rs-jersey-and-jackson)
+ 
 ## Installation
 
 See the [Jangles](https://github.com/mintster/jangles) README for instructions on setting up the MySQL datasources for Development and Testing. This includes running **schema.sql** and **data.sql** scripts and defining the MySQL data connections in a `connections.xml` external property file. 

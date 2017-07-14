@@ -26,7 +26,7 @@ public class Launcher implements Module {
                 .module(Launcher.class)
 //                .args("-H")
                 .args("--server", "--config=classpath:bootique.yml")
-                .run();
+                .exec();
     }
 
     //@formatter:on

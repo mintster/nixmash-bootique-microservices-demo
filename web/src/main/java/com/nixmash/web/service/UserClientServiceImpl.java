@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Created by daveburke on 7/6/17.
  */
+@SuppressWarnings("SameParameterValue")
 public class UserClientServiceImpl implements UserClientService {
 
     private final JanglesCache janglesCache;
@@ -51,7 +52,7 @@ public class UserClientServiceImpl implements UserClientService {
 
     // endregion
 
-    // region User Rest Actions
+    // region Rest Actions
 
     private List<?> getRestList(String path, Class clazz) throws RestProcessingException {
 

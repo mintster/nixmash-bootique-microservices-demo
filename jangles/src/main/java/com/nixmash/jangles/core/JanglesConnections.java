@@ -58,7 +58,7 @@ public class JanglesConnections {
 				(janglesConfiguration.testDbConnectionName);
 	}
 
-	@SuppressWarnings("ConstantConditions")
+	@SuppressWarnings({"ConstantConditions", "Duplicates"})
 	private JanglesConnection getConnection(String name) {
 
 		JanglesConnections janglesConnections = null;

@@ -35,7 +35,6 @@ public class UserResource extends Application {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<JanglesUser> getAll() {
-		List<JanglesUser> users = userService.getJanglesUsers();
-		return users;
+		return userService.getJanglesUsers();
 	}
 }

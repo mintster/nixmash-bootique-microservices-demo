@@ -1,7 +1,7 @@
 package com.nixmash.web;
 
 import com.nixmash.web.controller.GeneralController;
-import io.bootique.test.BQTestRuntime;
+import io.bootique.BQRuntime;
 import io.bootique.test.junit.BQTestFactory;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -22,12 +22,12 @@ public class ModuleTest {
 
     @Test
     public void loadModuleTest() throws IOException {
-        BQTestRuntime runtime = testFactory.app("--server", "--config=classpath:bootique-tests.yml")
+        BQRuntime runtime = testFactory.app("--server", "--config=classpath:bootique-tests.yml")
                 .autoLoadModules()
                 .module(binder -> binder.bind(GeneralController.class))
                 .createRuntime();
 
-        GeneralController controller = runtime.getRuntime().getInstance(GeneralController.class);
+        GeneralController controller = runtime.getInstance(GeneralController.class);
         Assert.assertNotNull(controller.home());
     }
 
