@@ -10,9 +10,17 @@ NixMash Microservices
 - **Mustache** - the Spullara Java Mustache Implementation for "logic free" templating [(GitHub)](https://github.com/spullara/mustache.java)
 - **Bootstrap** - responsive web theming
 
+## Contents
+
+- [NixMash Posts by Branch](#nixmash-posts-by-branch)
+- [Installation](#installation)
+- [Running the Application](#running-the-application)
+- [User Service](#user-service)
+- [Web Client](#web-client)
+
 ## NixMash Posts by Branch
 
- ### microservices-v0.1.0
+ ### microservices-v0.1.0 (in progress)
  
  - [Retrieving REST Data Object Lists with Jersey and Jackson ](http://nixmash.com/post/retrieving-rest-data-object-lists-with-jersey-and-jackson)
  - [Microservice Applications with Bootique](http://nixmash.com/post/microservice-applications-with-bootique)
@@ -84,8 +92,5 @@ The `Web` client module URL is `http://localhost:9000.`  This is the page with u
 
 ![](http://nixmash.com/x/pics/github/micro0710a.png)
 
-**Last Updated:** *7/10/17*
-
-
-
+**Last Updated:** *7/14/17*
 
