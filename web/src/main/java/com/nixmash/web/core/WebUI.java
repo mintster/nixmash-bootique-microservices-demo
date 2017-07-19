@@ -6,12 +6,11 @@ import com.nixmash.jangles.core.JanglesCache;
 import com.nixmash.jangles.core.JanglesGlobals;
 import com.nixmash.web.dto.PageInfo;
 import com.nixmash.web.enums.ActiveMenu;
+import com.nixmash.web.exceptions.RestProcessingException;
 import org.apache.commons.lang3.LocaleUtils;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by daveburke on 7/1/17.
@@ -24,6 +23,7 @@ public class WebUI implements Serializable {
     private static final String USERS_MENU = "users";
     private static final String POSTS_MENU = "posts";
     private static final String BUNDLE = "messages";
+    private static final String ERROR_PAGE = "error";
 
 
     // region Constructor
@@ -69,6 +69,8 @@ public class WebUI implements Serializable {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("pageinfo.cvs").getFile());
         BufferedReader br = new BufferedReader(new FileReader(file));
+        Locale locale = LocaleUtils.toLocale(webContext.config().currentLocale);
+        String pageTitlePrefix = webContext.config().pageTitlePrefix;
         String line;
         List<PageInfo> pageInfoList = new ArrayList<>();
         int iteration = 0;
@@ -78,19 +80,22 @@ public class WebUI implements Serializable {
                 continue;
             }
             String[] fields = line.split(",");
+
             int page_id = Integer.parseInt(fields[0]);
             String page_key = fields[1];
-            String page_title = String.format("%s : %s", webContext.config().pageTitlePrefix, fields[2]);
+            String page_title = String.format("%s : %s", pageTitlePrefix, fields[2]);
             String heading = fields[3].equals(NULL_FIELD) ? null : fields[3];
             String subheading = fields[4].equals(NULL_FIELD) ? null : fields[4];
             String menu = fields[5].equals(NULL_FIELD) ? null : fields[5];
+
             PageInfo pageInfo = PageInfo.getBuilder(page_id, page_key, page_title)
                     .heading(heading)
                     .subheading(subheading)
                     .inDevelopmentMode(isInDevelopmentMode())
                     .activeMenu(getActiveMenu(menu))
-                    .resourceBundle(new TranslateBundleFunction(BUNDLE, LocaleUtils.toLocale(webContext.config().currentLocale)))
+                    .resourceBundle(new TranslateBundleFunction(BUNDLE, locale))
                     .build();
+
             pageInfoList.add(pageInfo);
         }
         br.close();
@@ -144,4 +149,14 @@ public class WebUI implements Serializable {
     }
     // endregion
 
+    // region Error Page
+
+    public String errorPage(RestProcessingException e) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("pageinfo", getPageInfo(ERROR_PAGE));
+        model.put("errorMessage", e.getMsg());
+        return webContext.templatePathResolver().populateTemplate("error.html", model);
+    }
+
+    // endregion
 }

@@ -1,6 +1,7 @@
 package com.nixmash.web.core;
 
 import com.google.inject.Inject;
+import com.nixmash.web.resolvers.TemplatePathResolver;
 
 import java.io.Serializable;
 
@@ -12,12 +13,14 @@ public class WebContext implements Serializable{
     private final WebConfig webConfig;
     private final WebLocalizer webLocalizer;
     private final WebGlobals webGlobals;
+    private final TemplatePathResolver templatePathResolver;
 
     @Inject
-    public WebContext(WebConfig webConfig, WebLocalizer webLocalizer, WebGlobals webGlobals) {
+    public WebContext(WebConfig webConfig, WebLocalizer webLocalizer, WebGlobals webGlobals, TemplatePathResolver templatePathResolver) {
         this.webConfig = webConfig;
         this.webLocalizer = webLocalizer;
         this.webGlobals = webGlobals;
+        this.templatePathResolver = templatePathResolver;
     }
 
 
@@ -33,4 +36,7 @@ public class WebContext implements Serializable{
         return this.webGlobals;
     }
 
+    public TemplatePathResolver templatePathResolver() {
+        return this.templatePathResolver;
+    }
 }

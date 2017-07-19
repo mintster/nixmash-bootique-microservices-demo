@@ -3,7 +3,7 @@ package com.nixmash.web.rest;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.nixmash.web.controller.GeneralController;
+import com.nixmash.web.controller.PostController;
 import com.nixmash.web.guice.WebTestModule;
 import com.nixmash.web.resolvers.TemplatePathResolver;
 import io.bootique.jersey.JerseyModule;
@@ -12,9 +12,6 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -22,41 +19,25 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.nixmash.jangles.utils.JanglesUtils.configureTestDb;
 import static com.nixmash.web.utils.TestUtils.TEST_URL;
 import static com.nixmash.web.utils.TestUtils.YAML_CONFIG;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by daveburke on 7/1/17.
  */
 @RunWith(JUnit4.class)
-public class ControllerTest {
-
+public class PostControllerTest {
 
     @ClassRule
     public static JettyTestFactory JETTY_FACTORY = new JettyTestFactory();
 
     @Inject
-    private GeneralController mockGeneralController;
-
-    @Inject
     private TemplatePathResolver templatePathResolver;
 
     private Client client;
-
-    private Answer<String> usersAnswer = new Answer<String>() {
-        public String answer(InvocationOnMock invocation) throws Throwable {
-            Map<String, Object> model = new HashMap<>();
-            model.put("users", new ArrayList<>());
-            return templatePathResolver.populateTemplate("users.html", model);
-        }
-    };
 
     @BeforeClass
     public static void setupClass() {
@@ -69,7 +50,7 @@ public class ControllerTest {
         JETTY_FACTORY.app()
                 .autoLoadModules()
                 .args(YAML_CONFIG)
-                .module(binder -> JerseyModule.extend(binder).addResource(GeneralController.class))
+                .module(binder -> JerseyModule.extend(binder).addResource(PostController.class))
                 .start();
 
     }
@@ -91,30 +72,18 @@ public class ControllerTest {
         ClientConfig config = new ClientConfig();
         this.client = ClientBuilder.newClient(config);
 
-        this.mockGeneralController = Mockito.mock(GeneralController.class);
-        when(mockGeneralController.restUsers()).thenAnswer(usersAnswer);
     }
 
     /**
      *
-     *  Normal access to "/users" will display the error.html page
+     *  "/posts" will display the posts.html page
      */
     @Test
-    public void getUsersTest() throws Exception {
-        WebTarget target = client.target(TEST_URL + "/users");
+    public void getPostsPageTest() throws Exception {
+        WebTarget target = client.target(TEST_URL + "/posts");
         Response response = target.request().get();
-        assertTrue(response.readEntity(String.class).contains("Oops!"));
+        assertTrue(response.readEntity(String.class).contains("<h1>Posts</h1>"));
     }
 
-    /**
-     *
-     * GeneralController is mocked so method returns Stubbed Answer
-     *  displaying users.html page
-     */
-    @Test
-    public void usersPageDisplays() throws Exception {
-        String populatedTemplate = mockGeneralController.restUsers();
-        assertTrue(populatedTemplate.contains("<title>Users Test Page</title>"));
-    }
 
 }
