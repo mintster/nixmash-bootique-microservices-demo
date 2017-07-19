@@ -16,7 +16,6 @@ public class Launcher implements Module {
 
     private static final Logger logger = LoggerFactory.getLogger(Launcher.class);
 
-    //@formatter:off
 
     public static void main(String[] args) {
 
@@ -29,15 +28,15 @@ public class Launcher implements Module {
                 .exec();
     }
 
-    //@formatter:on
 
     @Override
     public void configure(Binder binder) {
 
-        JerseyModule.extend(binder)
-                .addResource(GeneralController.class);
+        Package pkg = GeneralController.class.getPackage();
+        JerseyModule.extend(binder).addPackage(pkg);
 
-        JettyModule.extend(binder).addStaticServlet("s1", "/css/*", "/img/*", "/js/*", "/fonts/*");
+        JettyModule.extend(binder)
+                .addStaticServlet("s1", "/css/*", "/img/*", "/js/*", "/fonts/*");
 
     }
 

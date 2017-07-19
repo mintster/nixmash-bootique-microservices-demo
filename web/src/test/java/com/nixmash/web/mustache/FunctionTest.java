@@ -181,7 +181,7 @@ public class FunctionTest {
     @Test
     public void classpathTestMapping() throws Exception {
         TemplatePathResolver underTest = new TemplatePathResolver();
-        Reader reader = underTest.getReader("commentinline.html");
+        Reader reader = underTest.getReader("templates/commentinline.html");
         MustacheFactory c = new DefaultMustacheFactory();
         Mustache m = c.compile(reader, "commentinline.html");
         StringWriter sw = new StringWriter();
@@ -205,7 +205,7 @@ public class FunctionTest {
         String bundle = "messages";
 
         TemplatePathResolver bundleTest = new TemplatePathResolver();
-        Reader reader = bundleTest.getReader("translatebundle.html");
+        Reader reader = bundleTest.getReader("templates/translatebundle.html");
         MustacheFactory c = new DefaultMustacheFactory();
         Mustache m = c.compile(reader, "translatebundle.html");
         StringWriter sw = new StringWriter();

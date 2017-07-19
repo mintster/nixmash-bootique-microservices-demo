@@ -42,8 +42,6 @@ public class GeneralController {
     public String home() {
         Map<String, Object> model = new HashMap<>();
         model.put("pageinfo", webUI.getPageInfo(HOME_PAGE));
-        model.put("jumbotronTitle", webUI.getMessage(JUMBOTRON_TITLE_KEY));
-        model.put("jumbotronSubtitle", webUI.getMessage(JUMBOTRON_SUBTITLE_KEY));
         return templatePathResolver.populateTemplate("home.html", model);
     }
 
