@@ -39,7 +39,7 @@ public class Launcher implements Module  {
 		JerseyModule.extend(binder)
 				.addResource(UserResource.class)
 				.addResource(GeneralResource.class)
-				.addResource(DeclarativeLinkingFeature.class);
+				.addFeature(DeclarativeLinkingFeature.class);
 
 		binder.bind(IConnection.class).to(MySqlConnection.class);
 	}

@@ -54,6 +54,7 @@ public class GeneralController {
     public String home() {
         Map<String, Object> model = new HashMap<>();
         model.put("pageinfo", webUI.getPageInfo(HOME_PAGE));
+        model.put("trans", webUI.getResourceBundle());
         model.put("jumbotronTitle", webUI.getMessage(JUMBOTRON_TITLE_KEY));
         model.put("jumbotronSubtitle", webUI.getMessage(JUMBOTRON_SUBTITLE_KEY));
         return templatePathResolver.populateTemplate("home.html", model);
@@ -72,6 +73,7 @@ public class GeneralController {
 
         Map<String, Object> model = new HashMap<>();
         model.put("pageinfo", webUI.getPageInfo(USERS_PAGE));
+        model.put("trans", webUI.getResourceBundle());
         model.put("users", users);
         model.put("usersActive", " class=active");
         return templatePathResolver.populateTemplate("users.html", model);
@@ -79,6 +81,7 @@ public class GeneralController {
 
     private String errorPage(RestProcessingException e) {
         Map<String, Object> model = new HashMap<>();
+        model.put("trans", webUI.getResourceBundle());
         model.put("pageinfo", webUI.getPageInfo(ERROR_PAGE));
         model.put("errorMessage", e.getMsg());
         return templatePathResolver.populateTemplate("error.html", model);

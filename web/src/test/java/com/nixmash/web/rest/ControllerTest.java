@@ -3,10 +3,7 @@ package com.nixmash.web.rest;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.nixmash.jangles.core.JanglesGlobals;
-import com.nixmash.jangles.db.IConnection;
 import com.nixmash.web.controller.GeneralController;
-import com.nixmash.web.guice.TestConnection;
 import com.nixmash.web.guice.WebTestModule;
 import com.nixmash.web.resolvers.TemplatePathResolver;
 import io.bootique.jersey.JerseyModule;
@@ -72,8 +69,6 @@ public class ControllerTest {
         JETTY_FACTORY.app()
                 .autoLoadModules()
                 .args(YAML_CONFIG)
-                .module(binder -> binder.bind(IConnection.class).to(TestConnection.class))
-                .module(binder -> binder.bind(JanglesGlobals.class))
                 .module(binder -> JerseyModule.extend(binder).addResource(GeneralController.class))
                 .start();
 

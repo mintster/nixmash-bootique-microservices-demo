@@ -22,6 +22,8 @@ NixMash Microservices
 
  ### microservices-v0.1.0 (in progress)
  
+ - [Configuring Jersey Declarative Linking in Bootique ](http://nixmash.com/post/configuring-jersey-declarative-linking-in-bootique)
+ - [Custom REST Links with Jersey Conditional Link Injection](http://nixmash.com/post/custom-rest-links-with-jersey-conditional-link-injection)
  - [Retrieving REST Data Object Lists with Jersey and Jackson ](http://nixmash.com/post/retrieving-rest-data-object-lists-with-jersey-and-jackson)
  - [Microservice Applications with Bootique](http://nixmash.com/post/microservice-applications-with-bootique)
  - [REST Notes: JAX-RS, Jersey and Jackson](http://nixmash.com/post/rest-notes-jax-rs-jersey-and-jackson)

@@ -1,10 +1,12 @@
 package com.nixmash.web.core;
 
+import com.github.mustachejava.functions.TranslateBundleFunction;
 import com.google.inject.Inject;
 import com.nixmash.jangles.core.JanglesCache;
 import com.nixmash.jangles.core.JanglesGlobals;
 import com.nixmash.web.dto.PageInfo;
 import com.nixmash.web.enums.ActiveMenu;
+import org.apache.commons.lang3.LocaleUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class WebUI implements Serializable {
     private static final String NULL_FIELD = "*";
     private static final String USERS_MENU = "users";
     private static final String POSTS_MENU = "posts";
+    private static final String BUNDLE = "messages";
 
 
     // region Constructor
@@ -34,6 +37,14 @@ public class WebUI implements Serializable {
         this.janglesGlobals = janglesGlobals;
         this.janglesCache = janglesCache;
         this.webContext = webContext;
+    }
+
+    // endregion
+
+    // region Resource Bundle
+
+    public TranslateBundleFunction getResourceBundle() {
+        return new TranslateBundleFunction(BUNDLE, LocaleUtils.toLocale(webContext.config().currentLocale));
     }
 
     // endregion
@@ -78,6 +89,7 @@ public class WebUI implements Serializable {
                     .subheading(subheading)
                     .inDevelopmentMode(isInDevelopmentMode())
                     .activeMenu(getActiveMenu(menu))
+                    .resourceBundle(new TranslateBundleFunction(BUNDLE, LocaleUtils.toLocale(webContext.config().currentLocale)))
                     .build();
             pageInfoList.add(pageInfo);
         }

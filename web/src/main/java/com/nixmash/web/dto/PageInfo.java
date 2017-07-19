@@ -1,5 +1,6 @@
 package com.nixmash.web.dto;
 
+import com.github.mustachejava.functions.TranslateBundleFunction;
 import com.nixmash.web.enums.ActiveMenu;
 
 import java.io.Serializable;
@@ -8,7 +9,9 @@ import java.io.Serializable;
  * Created by daveburke on 7/3/17.
  */
 public class PageInfo implements Serializable {
+
     private static final long serialVersionUID = 5250923182891103240L;
+    private static final String BUNDLE = "messages";
 
     // region properties
     private Integer page_id;
@@ -19,6 +22,7 @@ public class PageInfo implements Serializable {
     private Boolean inDevelopmentMode = false;
     private String menu;
     private ActiveMenu activeMenu;
+    private TranslateBundleFunction trans;
 
     // endregion
 
@@ -88,6 +92,14 @@ public class PageInfo implements Serializable {
         this.activeMenu = activeMenu;
     }
 
+    public TranslateBundleFunction getTrans() {
+        return trans;
+    }
+
+    public void setTrans(TranslateBundleFunction trans) {
+        this.trans = trans;
+    }
+
     // endregion
 
     // region Builder
@@ -127,6 +139,10 @@ public class PageInfo implements Serializable {
             return this;
         }
 
+        public Builder resourceBundle(TranslateBundleFunction translateBundleFunction) {
+            built.setTrans(translateBundleFunction);
+            return this;
+        }
 
         public PageInfo build() {
             return built;

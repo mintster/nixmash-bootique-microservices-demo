@@ -3,6 +3,7 @@ package com.nixmash.web.mustache;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import com.github.mustachejava.functions.TranslateBundleFunction;
 import com.github.mustachejava.resolver.ClasspathResolver;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.nixmash.web.utils.MustacheUtils.getContents;
@@ -196,5 +198,22 @@ public class FunctionTest {
     private File getRoot(String fileName) {
         File file = new File("src/test/resources/templates");
         return new File(file, fileName).exists() ? file : new File("src/test/resources/templates");
+    }
+
+    @Test
+    public void resourceBundleTests() throws Exception {
+        String bundle = "messages";
+
+        TemplatePathResolver bundleTest = new TemplatePathResolver();
+        Reader reader = bundleTest.getReader("translatebundle.html");
+        MustacheFactory c = new DefaultMustacheFactory();
+        Mustache m = c.compile(reader, "translatebundle.html");
+        StringWriter sw = new StringWriter();
+        Map<String, Object> scope = new HashMap<>();
+        scope.put("trans", new TranslateBundleFunction(bundle, Locale.US));
+        m.execute(sw, scope);
+
+        // messages.properties contains [jumbotron.title] = "NixMash Microservices"
+        assert(sw.toString().contains("NixMash Microservices"));
     }
 }

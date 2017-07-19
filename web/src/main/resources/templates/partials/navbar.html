@@ -12,11 +12,11 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li{{#pageinfo.activeMenu.usersMenu}} class="active"{{/pageinfo.activeMenu.usersMenu}}>
-                    <a href="/users">Users</a>
+                    <a href="/users">{{#pageinfo.trans}}navbar.users{{/pageinfo.trans}}</a>
                 </li>
-<!--                <li{{#pageinfo.activeMenu.postsMenu}} class="active"{{/pageinfo.activeMenu.postsMenu}}>
-                    <a href="/posts">Posts</a>
-                </li>-->
+                <li{{#pageinfo.activeMenu.postsMenu}} class="active"{{/pageinfo.activeMenu.postsMenu}}>
+                    <a href="/posts">{{#pageinfo.trans}}navbar.posts{{/pageinfo.trans}}</a>
+                </li>
             </ul>
         </div>
     </div>
