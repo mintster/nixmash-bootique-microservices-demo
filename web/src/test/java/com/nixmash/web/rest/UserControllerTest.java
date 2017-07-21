@@ -84,11 +84,16 @@ public class UserControllerTest {
 
     @Before
     public void startJetty() {
+
+        // region Guice injection and Jersey Client config
+
         Injector injector = Guice.createInjector(new WebTestModule());
         injector.injectMembers(this);
 
         ClientConfig config = new ClientConfig();
         this.client = ClientBuilder.newClient(config);
+
+        // endregion
 
         this.mockUserController = Mockito.mock(UserController.class);
         when(mockUserController.restUsers()).thenAnswer(usersAnswer);

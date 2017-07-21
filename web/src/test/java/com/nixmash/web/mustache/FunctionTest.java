@@ -204,11 +204,16 @@ public class FunctionTest {
     public void resourceBundleTests() throws Exception {
         String bundle = "messages";
 
+        // region read and prep the template
+
         TemplatePathResolver bundleTest = new TemplatePathResolver();
         Reader reader = bundleTest.getReader("templates/translatebundle.html");
         MustacheFactory c = new DefaultMustacheFactory();
         Mustache m = c.compile(reader, "translatebundle.html");
         StringWriter sw = new StringWriter();
+
+        // endregion
+
         Map<String, Object> scope = new HashMap<>();
         scope.put("trans", new TranslateBundleFunction(bundle, Locale.US));
         m.execute(sw, scope);

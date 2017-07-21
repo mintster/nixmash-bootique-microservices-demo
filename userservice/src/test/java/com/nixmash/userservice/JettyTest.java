@@ -66,7 +66,6 @@ public class JettyTest {
     @Test
     public void getUsersTest() {
         app.start(binder -> JettyModule.extend(binder).addServlet(mockServlet, "servlet", "/*"), YAML_CONFIG);
-
         WebTarget base = ClientBuilder.newClient().target(TEST_URL);
         Response r1 = base.path("/users").request().get();
         assertEquals(Status.OK.getStatusCode(), r1.getStatus());
@@ -76,12 +75,9 @@ public class JettyTest {
     public void testInitParametersPassed() {
 
         app.start(binder -> JettyModule.extend(binder).addServlet(new TestServlet(), "s1", "/*"), YAML_CONFIG);
-
         WebTarget base = ClientBuilder.newClient().target(TEST_URL);
-
         Response r1 = base.path("/").request().get();
         assertEquals(Status.OK.getStatusCode(), r1.getStatus());
-
         assertEquals("s1_a1_b2", r1.readEntity(String.class));
     }
 
@@ -93,7 +89,6 @@ public class JettyTest {
             resp.setContentType("text/plain");
 
             ServletConfig config = getServletConfig();
-
             resp.getWriter().print(config.getServletName());
             resp.getWriter().print("_" + config.getServletContext().getInitParameter("a"));
             resp.getWriter().print("_" + config.getServletContext().getInitParameter("b"));

@@ -23,7 +23,6 @@ public class Launcher implements Module {
                 .app(args)
                 .autoLoadModules()
                 .module(Launcher.class)
-//                .args("-H")
                 .args("--server", "--config=classpath:bootique.yml")
                 .exec();
     }

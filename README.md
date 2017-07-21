@@ -20,8 +20,13 @@ NixMash Microservices
 
 ## NixMash Posts by Branch
 
- ### microservices-v0.1.0 (in progress)
+ ### microservices-v0.1.0
  
+ - [Multiple Bootique Module Shaded Jars with Maven ](http://nixmash.com/post/multiple-bootique-module-shaded-jars-with-maven)
+ - [Testing MVC Controller Methods with REST Endpoints in JUnit ](http://nixmash.com/post/testing-mvc-controller-methods-with-rest-endpoints-in-junit)
+ - [Localized Resource Properties with Java Mustache](http://nixmash.com/post/localized-resource-properties-with-java-mustache)
+ - [Adding Static Paths in Bootique](http://nixmash.com/post/adding-static-paths-in-bootique)
+ - [Roll Your Own Mustache Template Resolver in Bootique MVC ](http://nixmash.com/post/roll-your-own-mustache-template-resolver-in-bootique-mvc)
  - [Configuring Jersey Declarative Linking in Bootique ](http://nixmash.com/post/configuring-jersey-declarative-linking-in-bootique)
  - [Custom REST Links with Jersey Conditional Link Injection](http://nixmash.com/post/custom-rest-links-with-jersey-conditional-link-injection)
  - [Retrieving REST Data Object Lists with Jersey and Jackson ](http://nixmash.com/post/retrieving-rest-data-object-lists-with-jersey-and-jackson)

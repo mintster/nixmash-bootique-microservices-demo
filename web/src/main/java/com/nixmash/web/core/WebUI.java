@@ -15,7 +15,7 @@ import java.util.*;
 /**
  * Created by daveburke on 7/1/17.
  */
-@SuppressWarnings("SameParameterValue")
+@SuppressWarnings({"SameParameterValue", "ConstantConditions"})
 public class WebUI implements Serializable {
 
     private static final long serialVersionUID = 9155986213118958079L;
@@ -44,30 +44,37 @@ public class WebUI implements Serializable {
     // region Resource Bundle
 
     public TranslateBundleFunction getResourceBundle() {
-        return new TranslateBundleFunction(BUNDLE, LocaleUtils.toLocale(webContext.config().currentLocale));
+        Locale locale = LocaleUtils.toLocale(webContext.config().currentLocale);
+        return new TranslateBundleFunction(BUNDLE, locale);
     }
 
     // endregion
 
     // region PageInfo
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "UnnecessaryLocalVariable"})
     public PageInfo getPageInfo(String pagekey) {
         List<PageInfo> pageInfoList = (List<PageInfo>) janglesCache.get(pageInfoCacheKey());
         if (pageInfoList == null) {
             try {
                 pageInfoList = loadPageInfoFromCvs();
+                janglesCache.put(pageInfoCacheKey(), (Serializable) pageInfoList);
             } catch (IOException e) {
                 return new PageInfo();
             }
         }
         Optional<PageInfo> pageInfo = pageInfoList.stream().filter(p -> p.getPage_key().equals(pagekey)).findFirst();
         return pageInfo.orElseGet(PageInfo::new);
+        /*
+        PageInfo found = pageInfo.orElseGet(PageInfo::new);
+        found.setTrans(getResourceBundle());
+        return found;
+        */
     }
 
-    public List<PageInfo> loadPageInfoFromCvs() throws IOException {
+    private List<PageInfo> loadPageInfoFromCvs() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("pageinfo.cvs").getFile());
+        File file  = new File(classLoader.getResource("pageinfo.cvs").getFile());
         BufferedReader br = new BufferedReader(new FileReader(file));
         Locale locale = LocaleUtils.toLocale(webContext.config().currentLocale);
         String pageTitlePrefix = webContext.config().pageTitlePrefix;
@@ -115,6 +122,10 @@ public class WebUI implements Serializable {
 
     public String pageInfoCacheKey() {
         return String.format("PageInfoCacheKey-%s", janglesGlobals.cloudApplicationId);
+    }
+
+    public String resourceBundleCacheKey() {
+        return String.format("ResourceBundleCacheKey-%s", janglesGlobals.cloudApplicationId);
     }
 
     // endregion
