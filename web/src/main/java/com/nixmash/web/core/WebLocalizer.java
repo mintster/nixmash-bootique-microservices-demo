@@ -22,6 +22,8 @@ public class WebLocalizer {
     private ResourceBundle getResourceBundle() {
         Locale currentLocale;
         currentLocale = LocaleUtils.toLocale(webConfig.currentLocale);
+        ResourceBundle bundle = ResourceBundle.getBundle("messages", currentLocale);
+        System.out.println(bundle.getBaseBundleName());
         return ResourceBundle.getBundle("messages", currentLocale);
     }
 

@@ -17,6 +17,7 @@ public class WebGlobals implements java.io.Serializable {
 	private static final long serialVersionUID = -2093038401455686564L;
 
 	public String cloudApplicationId;
+	public Boolean inProductionMode;
 
 	private final WebConfig webConfig;
 
@@ -32,6 +33,7 @@ public class WebGlobals implements java.io.Serializable {
 			input = new FileInputStream(webConfig.globalPropertiesFile);
 			properties.load(input);
 			this.cloudApplicationId = properties.getProperty("application.cloud.id");
+			this.inProductionMode = Boolean.valueOf(properties.getProperty("application.inProductionMode"));
 
 		} catch (IOException ex) {
 			logger.error(ex.getMessage());

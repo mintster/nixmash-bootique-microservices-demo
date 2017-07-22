@@ -35,7 +35,11 @@ NixMash Microservices
  
 ## Installation
 
-See the [Jangles](https://github.com/mintster/jangles) README for instructions on setting up the MySQL datasources for Development and Testing. This includes running **schema.sql** and **data.sql** scripts and defining the MySQL data connections in a `connections.xml` external property file. 
+The [Jangles](https://github.com/mintster/jangles) Module sets the application configuration in External Property and Config files. 
+
+1. Create two MySQL databases (H2 not used in tests because Stored Procedures are not supported.) Examples: *janglesdb* and *janglestestdb*. 
+2. MySQL Setup scripts are located in **jangles:/install/sql.** Run **schema.sql** and **data.sql** in Working and Test DBs.
+3. Copy external files in **jangles:/install/external** to a subdirectory of your **/home/user** directory and update the MySQL Connection settings in `connections.xml`.
 
 ## Running the Application
 

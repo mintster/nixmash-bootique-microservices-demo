@@ -7,6 +7,7 @@ import com.nixmash.jangles.core.JanglesGlobals;
 import com.nixmash.web.dto.PageInfo;
 import com.nixmash.web.enums.ActiveMenu;
 import com.nixmash.web.exceptions.RestProcessingException;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.LocaleUtils;
 
 import java.io.*;
@@ -74,7 +75,8 @@ public class WebUI implements Serializable {
 
     private List<PageInfo> loadPageInfoFromCvs() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file  = new File(classLoader.getResource("pageinfo.cvs").getFile());
+        File file = new File("pageinfo.cvs");
+        FileUtils.copyInputStreamToFile(classLoader.getResourceAsStream("pageinfo.cvs"), file);
         BufferedReader br = new BufferedReader(new FileReader(file));
         Locale locale = LocaleUtils.toLocale(webContext.config().currentLocale);
         String pageTitlePrefix = webContext.config().pageTitlePrefix;
@@ -135,9 +137,8 @@ public class WebUI implements Serializable {
     public Boolean isInDevelopmentMode() {
         return webContext
                 .globals()
-                .cloudApplicationId
-                .toLowerCase()
-                .contains("development");
+                .inProductionMode
+                .equals(false);
     }
 
     public ActiveMenu getActiveMenu(String menu) {

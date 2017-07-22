@@ -3,7 +3,7 @@
 	<connection>
 		<name>mysql.janglesdb</name>
 		<environment>mysql</environment>
-		<username>dbuser</username>
+		<username>devuser</username>
 		<password>password</password>
 		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
 		<database>janglesdb</database>
@@ -11,9 +11,10 @@
 	<connection>
 		<name>mysql.janglestestdb</name>
 		<environment>mysql</environment>
-		<username>dbuser</username>
+		<username>devuser</username>
 		<password>password</password>
 		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
 		<database>janglestestdb</database>
 	</connection>
 </connections>
+
