@@ -1,7 +1,5 @@
 package com.nixmash.jangles.db;
 
-import com.nixmash.jangles.model.JanglesConnection;
-
 import java.sql.*;
 
 /**

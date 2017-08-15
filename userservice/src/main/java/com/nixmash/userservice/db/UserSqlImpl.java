@@ -1,20 +1,24 @@
 package com.nixmash.userservice.db;
 
 import com.google.inject.Inject;
-import com.nixmash.jangles.db.JanglesSql;
 import com.nixmash.jangles.db.IConnection;
+import com.nixmash.jangles.db.JanglesSql;
 import com.nixmash.jangles.model.JanglesUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserSqlImpl extends JanglesSql implements UserSql {
 
     IConnection iConnection;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserSqlImpl.class);
+
 
     @Inject
     public UserSqlImpl(IConnection iConnection) {
@@ -43,7 +47,7 @@ public class UserSqlImpl extends JanglesSql implements UserSql {
     @Override
     public List<JanglesUser> getJanglesUsers() throws SQLException {
         {
-            List<JanglesUser> janglesUserList = new ArrayList<JanglesUser>();
+            List<JanglesUser> janglesUserList = new ArrayList<>();
             ResultSet rs = sqlQuery("SELECT * FROM jangles_users ORDER BY user_id");
             JanglesUser janglesUser = null;
             while (rs.next()) {
@@ -59,24 +63,24 @@ public class UserSqlImpl extends JanglesSql implements UserSql {
     @Override
     public Long createJanglesUser(JanglesUser janglesUser) {
         Long userId = -1L;
-        try (
-                CallableStatement cs = sqlCall("{call p_janglesusers_insert(?, ?, ?, ?, ?)}");
-        ) {
-
-            cs.setString(1, janglesUser.getUserName());
-            cs.setString(2, janglesUser.getPassword());
-            cs.setString(3, janglesUser.getDisplayName());
-            cs.setBoolean(4, janglesUser.getIsActive());
-            cs.registerOutParameter(5, Types.BIGINT);
-
-            cs.execute();
-            userId = cs.getLong(5);
+        try (CallableStatement cs = sqlCall("INSERT INTO jangles_users (username, password, display_name, is_active) VALUES " +
+                "('" + janglesUser.getUserName() + "', " +
+                "'" + janglesUser.getPassword() + "', " +
+                "'" + janglesUser.getDisplayName() + "', " +
+                janglesUser.getIsActive() + ")")) {
+            int result = cs.executeUpdate();
+            if (result == 1) {
+                ResultSet generatedKeys = cs.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    janglesUser.setUserId(generatedKeys.getLong(1));
+                }
+            }
             cs.close();
 
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            logger.info("Error creating new user: " + e.getMessage());
         }
-        return userId;
+        return janglesUser.getUserId();
     }
 
     // endregion

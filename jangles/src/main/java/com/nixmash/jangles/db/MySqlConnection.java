@@ -2,7 +2,6 @@ package com.nixmash.jangles.db;
 
 import com.google.inject.Inject;
 import com.nixmash.jangles.core.JanglesConnections;
-import com.nixmash.jangles.model.JanglesConnection;
 
 /**
  * Created by daveburke on 6/17/17.

@@ -2,7 +2,7 @@ package com.nixmash.jangles.core;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.nixmash.jangles.model.JanglesConnection;
+import com.nixmash.jangles.db.JanglesConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

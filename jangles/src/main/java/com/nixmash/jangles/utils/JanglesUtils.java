@@ -2,7 +2,7 @@ package com.nixmash.jangles.utils;
 
 import com.nixmash.jangles.core.JanglesConfiguration;
 import com.nixmash.jangles.core.JanglesConnections;
-import com.nixmash.jangles.model.JanglesConnection;
+import com.nixmash.jangles.db.JanglesConnection;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
@@ -14,9 +14,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class JanglesUtils {
 
@@ -91,4 +89,20 @@ public class JanglesUtils {
 					.get();
 
 	}
+
+	public static void showAllProperties() {
+		Map<String, String> env = System.getenv();
+		for (String envName : env.keySet()) {
+			System.out.format("%s=%s%n", envName, env.get(envName));
+		}
+
+		Properties systemProperties = System.getProperties();
+		Enumeration<?> enuProp = systemProperties.propertyNames();
+		while (enuProp.hasMoreElements()) {
+			String propertyName = (String) enuProp.nextElement();
+			String propertyValue = systemProperties.getProperty(propertyName);
+			System.out.println(propertyName + ": " + propertyValue);
+		}
+	}
+
 }
