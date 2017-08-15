@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <connections>
 	<connection>
-		<name>mysql.janglesdb</name>
+		<name>mysql.microdb</name>
 		<environment>mysql</environment>
 		<username>devuser</username>
 		<password>password</password>
 		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
-		<database>janglesdb</database>
+		<database>microdb</database>
 	</connection>
 	<connection>
-		<name>mysql.janglestestdb</name>
-		<environment>mysql</environment>
-		<username>devuser</username>
-		<password>password</password>
-		<urlbase>jdbc:mysql://127.0.0.1/</urlbase>
-		<database>janglestestdb</database>
+		<name>h2.testdb</name>
+		<environment>h2</environment>
+		<username>sa</username>
+		<password></password>
+		<urlbase>jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1</urlbase>
+		<database></database>
 	</connection>
 </connections>
 

@@ -42,6 +42,9 @@ public class RestTest {
                 .args("--config=classpath:bootique-tests.yml")
                 .autoLoadModules()
                 .module(binder -> JerseyModule.extend(binder).addResource(RestApi.class))
+//                .module(b -> b.bind(UserService.class).to(UserServiceImpl.class))
+//                .module(b -> b.bind(UsersDb.class).to(UsersDbImpl.class))
+//                .module(b -> ShiroModule.extend(b).addRealm(NixmashRealm.class))
                 .start();
     }
 

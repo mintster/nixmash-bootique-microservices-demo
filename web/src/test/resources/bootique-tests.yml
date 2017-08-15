@@ -11,4 +11,8 @@ log:
 jersey:
   urlPattern: /*
 
+shiroweb:
+  urls:
+    "/admin" : perms[\"admin\"]
+    "/pub"   : anon
 

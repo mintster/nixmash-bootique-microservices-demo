@@ -32,6 +32,10 @@
             <artifactId>bootique-logback</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.bootique.shiro</groupId>
+            <artifactId>bootique-shiro-web</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>

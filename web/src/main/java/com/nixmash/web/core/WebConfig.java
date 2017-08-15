@@ -22,6 +22,7 @@ public class WebConfig implements Serializable {
 	public String applicationDescription;
 	public String currentLocale;
 	public String pageTitlePrefix;
+	public String unauthorizedUrl;
 
     // endregion
 
@@ -44,6 +45,7 @@ public class WebConfig implements Serializable {
 		this.globalPropertiesFile = user_home + properties.getProperty("application.global.properties.file");
 		this.currentLocale = properties.getProperty("application.currentLocale");
 		this.pageTitlePrefix = properties.getProperty("web.pagetitle.prefix");
+		this.unauthorizedUrl = properties.getProperty("shiro.unauthorizedurl");
 
 	}
 

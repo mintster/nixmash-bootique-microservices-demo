@@ -37,8 +37,8 @@ NixMash Microservices
 
 The [Jangles](https://github.com/mintster/jangles) Module sets the application configuration in External Property and Config files. 
 
-1. Create two MySQL databases (H2 not used in tests because Stored Procedures are not supported.) Examples: *janglesdb* and *janglestestdb*. 
-2. MySQL Setup scripts are located in **jangles:/install/sql.** Run **schema.sql** and **data.sql** in Working and Test DBs.
+1. Create a MySQL database. 
+2. MySQL Setup scripts are located in **jangles:/install/sql.** Run **schema.sql** and **data.sql.**
 3. Copy external files in **jangles:/install/external** to a subdirectory of your **/home/user** directory and update the MySQL Connection settings in `connections.xml`.
 
 ## Running the Application

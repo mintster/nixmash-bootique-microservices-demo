@@ -3,15 +3,21 @@ package com.nixmash.web.rest;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.nixmash.jangles.db.UsersDb;
+import com.nixmash.jangles.db.UsersDbImpl;
+import com.nixmash.jangles.service.UserService;
+import com.nixmash.jangles.service.UserServiceImpl;
+import com.nixmash.web.auth.NixmashRealm;
 import com.nixmash.web.controller.PostController;
+import com.nixmash.web.guice.GuiceJUnit4Runner;
 import com.nixmash.web.guice.WebTestModule;
 import com.nixmash.web.resolvers.TemplatePathResolver;
 import io.bootique.jersey.JerseyModule;
 import io.bootique.jetty.test.junit.JettyTestFactory;
+import io.bootique.shiro.ShiroModule;
 import org.glassfish.jersey.client.ClientConfig;
 import org.junit.*;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -28,7 +34,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by daveburke on 7/1/17.
  */
-@RunWith(JUnit4.class)
+@RunWith(GuiceJUnit4Runner.class)
 public class PostControllerTest {
 
     @ClassRule
@@ -51,6 +57,9 @@ public class PostControllerTest {
                 .autoLoadModules()
                 .args(YAML_CONFIG)
                 .module(binder -> JerseyModule.extend(binder).addResource(PostController.class))
+                .module(b -> b.bind(UserService.class).to(UserServiceImpl.class))
+                .module(b -> b.bind(UsersDb.class).to(UsersDbImpl.class))
+                .module(b -> ShiroModule.extend(b).addRealm(NixmashRealm.class))
                 .start();
 
     }

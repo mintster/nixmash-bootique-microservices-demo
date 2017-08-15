@@ -1,8 +1,16 @@
 package com.nixmash.web.mustache;
 
+import com.nixmash.jangles.db.IConnection;
+import com.nixmash.jangles.db.UsersDb;
+import com.nixmash.jangles.db.UsersDbImpl;
+import com.nixmash.jangles.service.UserService;
+import com.nixmash.jangles.service.UserServiceImpl;
+import com.nixmash.web.auth.NixmashRealm;
+import com.nixmash.web.guice.TestConnection;
 import com.nixmash.web.views.ConcreteView;
 import io.bootique.jersey.JerseyModule;
 import io.bootique.jetty.test.junit.JettyTestFactory;
+import io.bootique.shiro.ShiroModule;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -29,6 +37,10 @@ public class JettyTest {
                 .args("--config=classpath:bootique-tests.yml")
                 .autoLoadModules()
                 .module(binder -> JerseyModule.extend(binder).addResource(Api.class))
+                .module(b -> b.bind(IConnection.class).to(TestConnection.class))
+                .module(b -> b.bind(UserService.class).to(UserServiceImpl.class))
+                .module(b -> b.bind(UsersDb.class).to(UsersDbImpl.class))
+                .module(b -> ShiroModule.extend(b).addRealm(NixmashRealm.class))
                 .start();
     }
 

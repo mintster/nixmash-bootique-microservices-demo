@@ -44,6 +44,7 @@
         <mockito.version>2.8.47</mockito.version>
         <jersey-links.version>2.25.1</jersey-links.version>
         <commons-io.version>2.5</commons-io.version>
+        <h2.version>1.4.196</h2.version>
     </properties>
 
     <dependencyManagement>
@@ -85,6 +86,18 @@
             <version>2.2.6</version>
         </dependency>
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>io.bootique</groupId>
             <artifactId>bootique-test</artifactId>
             <scope>test</scope>
@@ -121,30 +134,6 @@
     </dependencies>
 
     <build>
-        <!--    <resources>
-                <resource>
-                    <filtering>true</filtering>
-                    <directory>src/main/resources</directory>
-                </resource>
-                <resource>
-                    <filtering>false</filtering>
-                    <directory>src/main/java</directory>
-                    <includes>
-                        <include>**</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/*.java</exclude>
-                    </excludes>
-                </resource>
-                <resource>
-                    <directory>${basedir}/src/main/java</directory>
-                </resource>
-            </resources>
-            <testResources>
-                <testResource>
-                    <directory>${basedir}/src/test/java</directory>
-                </testResource>
-            </testResources>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
