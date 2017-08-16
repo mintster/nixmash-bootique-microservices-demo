@@ -3,17 +3,12 @@ package com.nixmash.web.rest;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.nixmash.jangles.db.IConnection;
-import com.nixmash.jangles.db.UsersDb;
-import com.nixmash.jangles.db.UsersDbImpl;
 import com.nixmash.web.auth.NixmashRealm;
 import com.nixmash.web.controller.UserController;
 import com.nixmash.web.guice.GuiceJUnit4Runner;
-import com.nixmash.web.guice.TestConnection;
 import com.nixmash.web.guice.WebTestModule;
 import com.nixmash.web.resolvers.TemplatePathResolver;
-import com.nixmash.web.service.UserService;
-import com.nixmash.web.service.UserServiceImpl;
+import com.nixmash.jangles.service.UserService;
 import io.bootique.jersey.JerseyModule;
 import io.bootique.jetty.test.junit.JettyTestFactory;
 import io.bootique.shiro.ShiroModule;
@@ -53,13 +48,7 @@ public class UserControllerTest {
     private UserController mockUserController;
 
     @Inject
-    private com.nixmash.web.service.UserServiceImpl userService;
-
-    @Inject
-    private UsersDbImpl usersDb;
-
-    @Inject
-    private TestConnection iConnection;
+    private static UserService userService;
 
     @Inject
     private TemplatePathResolver templatePathResolver;
@@ -86,21 +75,8 @@ public class UserControllerTest {
                 .autoLoadModules()
                 .args(YAML_CONFIG)
                 .module(binder -> JerseyModule.extend(binder).addResource(UserController.class))
-                .module(b -> b.bind(IConnection.class).to(TestConnection.class))
-                .module(b -> b.bind(UserService.class).to(UserServiceImpl.class))
-                .module(b -> b.bind(UsersDb.class).to(UsersDbImpl.class))
-                .module(b -> ShiroModule.extend(b).addRealm(NixmashRealm.class))
+                .module(b -> ShiroModule.extend(b).addRealm(new NixmashRealm(userService)))
                 .start();
-
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        try {
-            configureTestDb("clear.sql");
-        } catch (FileNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Before

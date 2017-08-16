@@ -2,8 +2,8 @@ package com.nixmash.jangles.guice;
 
 import com.google.inject.Inject;
 import com.nixmash.jangles.core.JanglesConnections;
-import com.nixmash.jangles.db.IConnection;
-import com.nixmash.jangles.db.JanglesConnection;
+import com.nixmash.jangles.db.cn.IConnection;
+import com.nixmash.jangles.db.cn.JanglesConnection;
 
 /**
  * Created by daveburke on 6/17/17.

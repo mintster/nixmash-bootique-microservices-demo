@@ -3,10 +3,7 @@ package com.nixmash.web.rest;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.nixmash.jangles.db.UsersDb;
-import com.nixmash.jangles.db.UsersDbImpl;
 import com.nixmash.jangles.service.UserService;
-import com.nixmash.jangles.service.UserServiceImpl;
 import com.nixmash.web.auth.NixmashRealm;
 import com.nixmash.web.controller.PostController;
 import com.nixmash.web.guice.GuiceJUnit4Runner;
@@ -43,6 +40,9 @@ public class PostControllerTest {
     @Inject
     private TemplatePathResolver templatePathResolver;
 
+    @Inject
+    private static UserService userService;
+
     private Client client;
 
     @BeforeClass
@@ -57,20 +57,9 @@ public class PostControllerTest {
                 .autoLoadModules()
                 .args(YAML_CONFIG)
                 .module(binder -> JerseyModule.extend(binder).addResource(PostController.class))
-                .module(b -> b.bind(UserService.class).to(UserServiceImpl.class))
-                .module(b -> b.bind(UsersDb.class).to(UsersDbImpl.class))
-                .module(b -> ShiroModule.extend(b).addRealm(NixmashRealm.class))
+                .module(b -> ShiroModule.extend(b).addRealm(new NixmashRealm(userService)))
                 .start();
 
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        try {
-            configureTestDb("clear.sql");
-        } catch (FileNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Before

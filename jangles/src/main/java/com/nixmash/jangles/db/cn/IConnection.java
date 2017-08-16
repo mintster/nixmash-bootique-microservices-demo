@@ -1,4 +1,4 @@
-package com.nixmash.jangles.db;
+package com.nixmash.jangles.db.cn;
 
 /**
  * Created by daveburke on 6/17/17.

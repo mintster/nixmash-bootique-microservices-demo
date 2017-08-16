@@ -2,10 +2,14 @@ package com.nixmash.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.google.inject.Inject;
 import com.nixmash.jangles.model.JanglesUser;
+import com.nixmash.web.auth.NixmashRealm;
 import com.nixmash.web.exceptions.RestProcessingException;
+import com.nixmash.jangles.service.UserService;
 import io.bootique.jersey.JerseyModule;
 import io.bootique.jetty.test.junit.JettyTestFactory;
+import io.bootique.shiro.ShiroModule;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -36,15 +40,16 @@ public class RestTest {
     @ClassRule
     public static JettyTestFactory TEST_SERVER = new JettyTestFactory();
 
+    @Inject
+    private static UserService userService;
+
     @BeforeClass
     public static void beforeClass() {
         TEST_SERVER.app()
-                .args("--config=classpath:bootique-tests.yml")
+                .args("--config=classpath:test.yml")
                 .autoLoadModules()
                 .module(binder -> JerseyModule.extend(binder).addResource(RestApi.class))
-//                .module(b -> b.bind(UserService.class).to(UserServiceImpl.class))
-//                .module(b -> b.bind(UsersDb.class).to(UsersDbImpl.class))
-//                .module(b -> ShiroModule.extend(b).addRealm(NixmashRealm.class))
+                .module(b -> ShiroModule.extend(b).addRealm(new NixmashRealm(userService)))
                 .start();
     }
 

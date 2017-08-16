@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.nixmash.jangles.db.IConnection;
+import com.nixmash.jangles.db.cn.IConnection;
 import com.nixmash.jangles.model.JanglesUser;
 import com.nixmash.userservice.resource.UserResource;
 import com.nixmash.userservice.guice.TestConnection;
@@ -62,15 +62,6 @@ public class RestTest {
                 .module(binder -> JerseyModule.extend(binder).addResource(UserResource.class))
                 .start();
 
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        try {
-            configureTestDb("clear.sql");
-        } catch (FileNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Before

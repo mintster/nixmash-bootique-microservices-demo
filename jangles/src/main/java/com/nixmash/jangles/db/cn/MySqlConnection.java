@@ -1,4 +1,4 @@
-package com.nixmash.jangles.db;
+package com.nixmash.jangles.db.cn;
 
 import com.google.inject.Inject;
 import com.nixmash.jangles.core.JanglesConnections;

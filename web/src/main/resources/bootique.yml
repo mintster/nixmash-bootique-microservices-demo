@@ -10,3 +10,10 @@ log:
   level: error
   debugLogback: false
 
+shiroweb:
+  urls:
+    "/admin" : roles[admin]
+    "/posts"   : authc
+    "/login" : anon
+    "/" : anon
+    "/unauthorized" : anon

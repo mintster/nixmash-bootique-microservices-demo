@@ -1,4 +1,4 @@
-package com.nixmash.jangles.db;
+package com.nixmash.jangles.db.cn;
 
 import javax.xml.bind.annotation.*;
 

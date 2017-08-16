@@ -13,6 +13,9 @@ jersey:
 
 shiroweb:
   urls:
-    "/admin" : perms[\"admin\"]
-    "/pub"   : anon
+    "/admin" : roles[admin]
+    "/posts"   : authc
+    "/login" : anon
+    "/" : anon
+    "/unauthorized" : anon
 

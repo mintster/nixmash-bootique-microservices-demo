@@ -57,7 +57,7 @@ public class FunctionTest {
 
     @Before
     public void loadModuleTest() {
-/*        BQTestRuntime runtime = testFactory.app("--server", "--config=classpath:bootique-tests.yml")
+/*        BQTestRuntime runtime = testFactory.app("--server", "--config=classpath:test.yml")
                 .module(WebTestModule.class)
                 .createRuntime();*/
         Injector injector = Guice.createInjector(new WebTestModule());
@@ -150,7 +150,7 @@ public class FunctionTest {
     }
 
     private StringWriter populatePage(String page, PageInfo pageInfo) {
-        File root = getRoot(page);
+        File root = getFunctionTestRoot(page);
         MustacheFactory c = new DefaultMustacheFactory(root);
         Mustache m = c.compile(page);
         StringWriter sw = new StringWriter();
@@ -161,7 +161,7 @@ public class FunctionTest {
 
     @Test
     public void factoryTest() throws IOException {
-        File root = getRoot("commentinline.html");
+        File root = getFunctionTestRoot("commentinline.html");
         MustacheFactory c = new DefaultMustacheFactory(root);
         Mustache m = c.compile("commentinline.html");
         StringWriter sw = new StringWriter();
@@ -173,7 +173,7 @@ public class FunctionTest {
 
     @Test
     public void classpathTest() throws Exception {
-        ClasspathResolver underTest = new ClasspathResolver("templates");
+        ClasspathResolver underTest = new ClasspathResolver("templates/functions");
         Reader reader = underTest.getReader("simple.html");
         assertThat(reader, is(notNullValue()));
     }
@@ -181,23 +181,23 @@ public class FunctionTest {
     @Test
     public void classpathTestMapping() throws Exception {
         TemplatePathResolver underTest = new TemplatePathResolver();
-        Reader reader = underTest.getReader("templates/commentinline.html");
+        Reader reader = underTest.getReader("templates/functions/commentinline.html");
         MustacheFactory c = new DefaultMustacheFactory();
         Mustache m = c.compile(reader, "commentinline.html");
         StringWriter sw = new StringWriter();
         Map<String, Object> scope = new HashMap<>();
         scope.put("title", "A Comedy of Errors");
         m.execute(sw, scope);
-        assertEquals(getContents(getRoot(), "commentinline.txt"), sw.toString());
+        assertEquals(getContents(getFunctionTestRoot(), "commentinline.txt"), sw.toString());
     }
 
-    private File getRoot() {
-       return new File("src/test/resources/templates");
+    private File getFunctionTestRoot() {
+       return new File("src/test/resources/templates/functions");
     }
 
-    private File getRoot(String fileName) {
-        File file = new File("src/test/resources/templates");
-        return new File(file, fileName).exists() ? file : new File("src/test/resources/templates");
+    private File getFunctionTestRoot(String fileName) {
+        File file = new File("src/test/resources/templates/functions");
+        return new File(file, fileName).exists() ? file : new File("src/test/resources/templates/functions");
     }
 
     @Test
@@ -207,9 +207,9 @@ public class FunctionTest {
         // region read and prep the template
 
         TemplatePathResolver bundleTest = new TemplatePathResolver();
-        Reader reader = bundleTest.getReader("templates/translatebundle.html");
+        Reader reader = bundleTest.getReader("templates/functions/translatebundle.html");
         MustacheFactory c = new DefaultMustacheFactory();
-        Mustache m = c.compile(reader, "translatebundle.html");
+        Mustache m = c.compile(reader, "functions/translatebundle.html");
         StringWriter sw = new StringWriter();
 
         // endregion

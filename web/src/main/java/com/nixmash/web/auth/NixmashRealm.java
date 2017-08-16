@@ -1,10 +1,9 @@
 package com.nixmash.web.auth;
 
 import com.google.inject.Inject;
-import com.nixmash.jangles.db.IConnection;
 import com.nixmash.jangles.dto.Role;
 import com.nixmash.jangles.dto.User;
-import com.nixmash.web.service.UserService;
+import com.nixmash.jangles.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -22,13 +21,11 @@ public class NixmashRealm extends AuthorizingRealm {
     private static final Logger logger = LoggerFactory.getLogger(NixmashRealm.class);
 
     private UserService userService;
-    private IConnection iConnection;
 
     @Inject
     public NixmashRealm(UserService userService) {
         setName("nixmashRealm");
         this.userService = userService;
-        this.iConnection = iConnection;
 
         HashedCredentialsMatcher authenticator =
                 new HashedCredentialsMatcher(Sha256Hash.ALGORITHM_NAME);

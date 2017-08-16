@@ -21,7 +21,7 @@ public class ModuleTest {
 
     @Test
     public void testRuntime() {
-        BQRuntime runtime = testFactory.app("--server", "--config=classpath:bootique-tests.yml")
+        BQRuntime runtime = testFactory.app("--server", "--config=classpath:test.yml")
                 .autoLoadModules()
                 .module(binder -> binder.bind(UserServiceConfig.class))
                 .createRuntime();

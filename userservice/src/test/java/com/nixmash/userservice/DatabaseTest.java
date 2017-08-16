@@ -10,7 +10,6 @@ import com.nixmash.userservice.guice.UserServiceTestModule;
 import com.nixmash.userservice.service.UserServiceImpl;
 import com.nixmash.userservice.utils.TestUtils;
 import org.assertj.core.api.Assertions;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -66,16 +65,6 @@ public class DatabaseTest {
             e.printStackTrace();
         }
     }
-
-    @AfterClass
-    public static void tearDown() {
-        try {
-            configureTestDb("clear.sql");
-        } catch (FileNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     // endregion
 

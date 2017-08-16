@@ -2,7 +2,7 @@ package com.nixmash.jangles.guice;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
-import com.nixmash.jangles.db.IConnection;
+import com.nixmash.jangles.db.cn.IConnection;
 import com.nixmash.jangles.service.JanglesApiService;
 
 /**

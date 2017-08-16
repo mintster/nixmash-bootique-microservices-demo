@@ -1,106 +1,82 @@
 package com.nixmash.web.mustache;
 
-import com.nixmash.jangles.db.IConnection;
+import com.google.inject.Inject;
 import com.nixmash.jangles.db.UsersDb;
 import com.nixmash.jangles.db.UsersDbImpl;
+import com.nixmash.jangles.db.cn.IConnection;
 import com.nixmash.jangles.service.UserService;
 import com.nixmash.jangles.service.UserServiceImpl;
 import com.nixmash.web.auth.NixmashRealm;
+import com.nixmash.web.controller.GeneralController;
+import com.nixmash.web.guice.GuiceJUnit4Runner;
 import com.nixmash.web.guice.TestConnection;
-import com.nixmash.web.views.ConcreteView;
 import io.bootique.jersey.JerseyModule;
 import io.bootique.jetty.test.junit.JettyTestFactory;
 import io.bootique.shiro.ShiroModule;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+@RunWith(GuiceJUnit4Runner.class)
 public class JettyTest {
 
     @ClassRule
     public static JettyTestFactory TEST_SERVER = new JettyTestFactory();
 
+    @Inject
+    private static UserService userService;
+
     @BeforeClass
     public static void beforeClass() {
+
+        Package pkg = GeneralController.class.getPackage();
         TEST_SERVER.app()
-                .args("--config=classpath:bootique-tests.yml")
+                .args("--config=classpath:test.yml")
                 .autoLoadModules()
-                .module(binder -> JerseyModule.extend(binder).addResource(Api.class))
-                .module(b -> b.bind(IConnection.class).to(TestConnection.class))
                 .module(b -> b.bind(UserService.class).to(UserServiceImpl.class))
                 .module(b -> b.bind(UsersDb.class).to(UsersDbImpl.class))
-                .module(b -> ShiroModule.extend(b).addRealm(NixmashRealm.class))
+                .module(b -> b.bind(IConnection.class).to(TestConnection.class))
+                .module(binder -> JerseyModule.extend(binder).addPackage(pkg))
+                .module(b -> ShiroModule.extend(b).addRealm(new NixmashRealm(userService)))
                 .start();
     }
 
     @Test
-    public void testV1() {
-        WebTarget base = ClientBuilder.newClient().target("http://localhost:9001");
-        Response r1 = base.path("/v1").request().get();
-        assertEquals(Status.OK.getStatusCode(), r1.getStatus());
-        assertEquals("v1_string_p1_number_564", r1.readEntity(String.class));
+    public void homePageTest() {
+        assertTrue(responseOK(pathResponse("/")));
     }
 
     @Test
-    public void testV2() {
+    public void usersPageTest() {
+        assertTrue(responseOK(pathResponse("/users")));
+    }
+
+    @Test
+    public void loginPageTest() {
+        assertTrue(responseOK(pathResponse("/login")));
+    }
+
+    @Test
+    public void postPageTest() {
+        // /posts is restricted to authorized users only. Redirected to /login
+        Response response = pathResponse("/posts");
+        assertTrue(response.readEntity(String.class).contains("<meta name='page_key' content='login'/>"));
+    }
+
+    private Response pathResponse(String path) {
         WebTarget base = ClientBuilder.newClient().target("http://localhost:9001");
-        Response r1 = base.path("/v2").request().get();
-        assertEquals(Status.OK.getStatusCode(), r1.getStatus());
-        assertEquals("v2_string_p2_number_5649", r1.readEntity(String.class));
+        return base.path(path).request().get();
     }
 
-    @Path("/")
-    @Produces(MediaType.TEXT_PLAIN)
-    public static class Api {
-
-        @GET
-        @Path("/v1")
-        public ConcreteView getV1() {
-            Model m = new Model();
-            m.setProp1("p1");
-            m.setProp2(564);
-            return new ConcreteView("mustacheTests_v1.mustache", m);
-        }
-
-        @GET
-        @Path("/v2")
-        public ConcreteView getV2() {
-            Model m = new Model();
-            m.setProp1("p2");
-            m.setProp2(5649);
-            return new ConcreteView("mustacheTests_v2.mustache", m);
-        }
-    }
-
-    public static class Model {
-        private String prop1;
-        private int prop2;
-
-        public String getProp1() {
-            return prop1;
-        }
-
-        public void setProp1(String prop1) {
-            this.prop1 = prop1;
-        }
-
-        public int getProp2() {
-            return prop2;
-        }
-
-        public void setProp2(int prop2) {
-            this.prop2 = prop2;
-        }
+    private Boolean responseOK(Response response) {
+        return Status.OK.getStatusCode() == response.getStatus();
     }
 }

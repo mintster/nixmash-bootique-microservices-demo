@@ -1,6 +1,7 @@
 package com.nixmash.jangles.db;
 
 import com.google.inject.Inject;
+import com.nixmash.jangles.db.cn.IConnection;
 import com.nixmash.jangles.dto.Role;
 import com.nixmash.jangles.dto.User;
 import org.slf4j.Logger;

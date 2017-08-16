@@ -3,7 +3,7 @@ package com.nixmash.userservice.guice;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.nixmash.jangles.db.IConnection;
+import com.nixmash.jangles.db.cn.IConnection;
 import com.nixmash.userservice.core.UserServiceConfig;
 import org.junit.Before;
 import org.junit.Test;

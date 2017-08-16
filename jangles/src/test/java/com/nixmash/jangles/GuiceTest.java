@@ -4,7 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nixmash.jangles.core.JanglesConfiguration;
-import com.nixmash.jangles.db.IConnection;
+import com.nixmash.jangles.db.cn.IConnection;
 import com.nixmash.jangles.guice.JanglesTestModule;
 import com.nixmash.jangles.guice.TestApiServiceImpl;
 import com.nixmash.jangles.guice.TestConnection;

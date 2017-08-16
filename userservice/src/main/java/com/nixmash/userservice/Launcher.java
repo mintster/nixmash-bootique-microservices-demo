@@ -2,8 +2,8 @@ package com.nixmash.userservice;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
-import com.nixmash.jangles.db.IConnection;
-import com.nixmash.jangles.db.MySqlConnection;
+import com.nixmash.jangles.db.cn.IConnection;
+import com.nixmash.jangles.db.cn.MySqlConnection;
 import com.nixmash.userservice.resource.GeneralResource;
 import com.nixmash.userservice.resource.UserResource;
 import io.bootique.Bootique;

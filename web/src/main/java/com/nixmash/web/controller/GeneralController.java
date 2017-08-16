@@ -6,6 +6,9 @@ import com.nixmash.web.resolvers.TemplatePathResolver;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +46,13 @@ public class GeneralController {
         Map<String, Object> model = new HashMap<>();
         model.put("pageinfo", webUI.getPageInfo(HOME_PAGE));
         return templatePathResolver.populateTemplate("home.html", model);
+    }
+
+    @GET
+    @Path("/login.jsp")
+    public Response redirectLogin() throws URISyntaxException {
+        URI targetURIForRedirection = new URI("/login");
+        return Response.seeOther(targetURIForRedirection).build();
     }
 
 }

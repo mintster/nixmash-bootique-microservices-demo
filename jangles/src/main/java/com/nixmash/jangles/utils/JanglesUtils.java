@@ -2,7 +2,7 @@ package com.nixmash.jangles.utils;
 
 import com.nixmash.jangles.core.JanglesConfiguration;
 import com.nixmash.jangles.core.JanglesConnections;
-import com.nixmash.jangles.db.JanglesConnection;
+import com.nixmash.jangles.db.cn.JanglesConnection;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
 

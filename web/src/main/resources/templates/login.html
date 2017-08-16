@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> templates/partials/header.html }}
+</head>
+<body>
+
+<!-- Navigation -->
+{{> templates/partials/navbar.html }}
+
+<!-- Page Content -->
+<div class="container content">
+    <div class="row col-lg-12">
+        <h1>{{ pageinfo.heading }}</h1>
+    </div>
+</div>
+<div class="container bs-container">
+    <div class="row row-centered col-lg-12">
+        <div class="bs-section col-lg-6 col-centered login-block">
+            <form action="login" method="POST">
+                <p><label>Username</label><input name="username" type="text"/></p>
+                <p><label>Password</label><input type="password" name="password"/></p>
+                <p><label>&nbsp;</label><input type="checkbox" name="rememberMe" value="true"/>Remember Me?</p>
+                <p><label>&nbsp;</label><input type="submit" value="Submit" class="btn btn-primary"/></p>
+            </form>
+
+            <div class="login-bottom">
+                {{#logout?}}LOGOUT!{{/logout?}}
+                <p class="lead">Accounts:</p>
+                <ul>
+                    <li><strong>admin:</strong> <em>bob/password</em></li>
+                    <li><strong>user:</strong> <em>ken/halo</em></li>
+                </ul>
+
+                {{#model.hasMessage}}
+                <p class="error">There was a problem with your login information. Please try again.</p>
+                {{/model.hasMessage}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+{{> templates/partials/footer.html }}
+
+</body>
+</html>

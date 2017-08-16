@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.nixmash.jangles.core.JanglesConfiguration;
 import com.nixmash.jangles.guice.GuiceJUnit4Runner;
 import com.nixmash.jangles.model.JanglesUser;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -42,15 +41,6 @@ public class DatabaseTest {
     public static void setup(){
         try {
             configureTestDb("populate.sql");
-        } catch (FileNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        try {
-            configureTestDb("clear.sql");
         } catch (FileNotFoundException | SQLException e) {
             e.printStackTrace();
         }

@@ -22,7 +22,7 @@ public class ModuleTest {
 
     @Test
     public void loadModuleTest() throws IOException {
-        BQRuntime runtime = testFactory.app("--server", "--config=classpath:bootique-tests.yml")
+        BQRuntime runtime = testFactory.app("--server", "--config=classpath:test.yml")
                 .autoLoadModules()
                 .module(binder -> binder.bind(GeneralController.class))
                 .createRuntime();

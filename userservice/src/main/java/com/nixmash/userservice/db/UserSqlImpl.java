@@ -1,7 +1,7 @@
 package com.nixmash.userservice.db;
 
 import com.google.inject.Inject;
-import com.nixmash.jangles.db.IConnection;
+import com.nixmash.jangles.db.cn.IConnection;
 import com.nixmash.jangles.db.JanglesSql;
 import com.nixmash.jangles.model.JanglesUser;
 import org.slf4j.Logger;

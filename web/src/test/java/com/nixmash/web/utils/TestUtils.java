@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 public class TestUtils {
 
     public static final String TEST_URL = "http://127.0.1.1:9001";
-    public static final String YAML_CONFIG = "--config=classpath:bootique-tests.yml";
+    public static final String YAML_CONFIG = "--config=classpath:test.yml";
     private static final String PASSWORD = "password";
 
     public static JanglesUser createJanglesUser(String username) {
