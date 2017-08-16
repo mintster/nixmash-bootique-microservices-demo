@@ -3,9 +3,10 @@ NixMash Microservices
 
 - **NixMash Jangles** - small backend for cloud configuration and shared components [(GitHub)](https://github.com/mintster/jangles)
 - **Bootique** - a lightweight Java Framework [http://bootique.io/](http://bootique.io/)
+- **Jetty** - embedded web server
 - **Jersey** - *REST* services for JAX-RS
 - **Jackson** - JSON/POJO binding
-- **Jetty** - embedded web server
+- **Apache Shiro** - user authentication and authorization
 - **Google Guice** - injection
 - **Mustache** - the Spullara Java Mustache Implementation for "logic free" templating [(GitHub)](https://github.com/spullara/mustache.java)
 - **Bootstrap** - responsive web theming

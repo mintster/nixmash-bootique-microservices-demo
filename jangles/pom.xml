@@ -31,9 +31,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-core</artifactId>
-                <version>1.4.0</version>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.4.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject</groupId>
@@ -55,34 +55,34 @@
     <build>
         <finalName>jangles</finalName>
         <plugins>
-         <!--   <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <excludes>
-                                    <exclude>javax.inject:javax.inject</exclude>
-                                </excludes>
-                            </artifactSet>
-                            <shadedArtifactAttached>false</shadedArtifactAttached>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.nixmash.jangles.Launcher</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
+            <!--   <plugin>
+                   <groupId>org.apache.maven.plugins</groupId>
+                   <artifactId>maven-shade-plugin</artifactId>
+                   <version>3.0.0</version>
+                   <executions>
+                       <execution>
+                           <phase>package</phase>
+                           <goals>
+                               <goal>shade</goal>
+                           </goals>
+                           <configuration>
+                               <artifactSet>
+                                   <excludes>
+                                       <exclude>javax.inject:javax.inject</exclude>
+                                   </excludes>
+                               </artifactSet>
+                               <shadedArtifactAttached>false</shadedArtifactAttached>
+                               <createDependencyReducedPom>false</createDependencyReducedPom>
+                               <transformers>
+                                   <transformer
+                                           implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                       <mainClass>com.nixmash.jangles.Launcher</mainClass>
+                                   </transformer>
+                               </transformers>
+                           </configuration>
+                       </execution>
+                   </executions>
+               </plugin>-->
         </plugins>
 
     </build>

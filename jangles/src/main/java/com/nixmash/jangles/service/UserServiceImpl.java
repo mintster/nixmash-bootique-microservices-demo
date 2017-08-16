@@ -36,6 +36,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<User> getUsers() {
+        List<User> users = null;
+        try {
+            users = usersDb.getUsers();
+        } catch (SQLException e) {}
+        return users;
+    }
+
+    @Override
     public User createUser(User user) {
         user.setPassword(new Sha256Hash(user.getPassword()).toHex());
         logger.info("User with email:" + user.getEmail() + " hashedPassword:" +user.getPassword());

@@ -3,17 +3,21 @@ package com.nixmash.web.rest;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.nixmash.jangles.service.UserService;
 import com.nixmash.web.auth.NixmashRealm;
 import com.nixmash.web.controller.UserController;
+import com.nixmash.web.core.WebUI;
 import com.nixmash.web.guice.GuiceJUnit4Runner;
 import com.nixmash.web.guice.WebTestModule;
 import com.nixmash.web.resolvers.TemplatePathResolver;
-import com.nixmash.jangles.service.UserService;
 import io.bootique.jersey.JerseyModule;
 import io.bootique.jetty.test.junit.JettyTestFactory;
 import io.bootique.shiro.ShiroModule;
 import org.glassfish.jersey.client.ClientConfig;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -48,6 +52,9 @@ public class UserControllerTest {
     private UserController mockUserController;
 
     @Inject
+    private WebUI webUI;
+
+    @Inject
     private static UserService userService;
 
     @Inject
@@ -59,6 +66,7 @@ public class UserControllerTest {
         public String answer(InvocationOnMock invocation) throws Throwable {
             Map<String, Object> model = new HashMap<>();
             model.put("users", new ArrayList<>());
+            model.put("pageinfo", webUI.getPageInfo("users"));
             return templatePathResolver.populateTemplate("users.html", model);
         }
     };
@@ -115,7 +123,7 @@ public class UserControllerTest {
     @Test
     public void usersPageDisplays() throws Exception {
         String populatedTemplate = mockUserController.restUsers();
-        assertTrue(populatedTemplate.contains("<title>Users Test Page</title>"));
+        assertTrue(populatedTemplate.contains("<meta name='page_key' content='users'/>"));
     }
 
 }

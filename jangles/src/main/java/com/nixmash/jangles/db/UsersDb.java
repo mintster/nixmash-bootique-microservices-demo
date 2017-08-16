@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface UsersDb {
 
+    List<User> getUsers() throws SQLException;
+
     User addUser(User user) throws SQLException;
     User getUser(String username) throws SQLException;
     List<Role> getRoles(Long userId) throws SQLException;

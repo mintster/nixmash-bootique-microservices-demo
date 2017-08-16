@@ -3,17 +3,32 @@ package com.nixmash.web.rest;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.nixmash.jangles.db.UsersDb;
+import com.nixmash.jangles.db.UsersDbImpl;
+import com.nixmash.jangles.db.cn.IConnection;
+import com.nixmash.jangles.db.cn.MySqlConnection;
 import com.nixmash.jangles.service.UserService;
+import com.nixmash.jangles.service.UserServiceImpl;
 import com.nixmash.web.auth.NixmashRealm;
 import com.nixmash.web.controller.PostController;
 import com.nixmash.web.guice.GuiceJUnit4Runner;
 import com.nixmash.web.guice.WebTestModule;
 import com.nixmash.web.resolvers.TemplatePathResolver;
+import io.bootique.BQRuntime;
 import io.bootique.jersey.JerseyModule;
 import io.bootique.jetty.test.junit.JettyTestFactory;
 import io.bootique.shiro.ShiroModule;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.mgt.DefaultSecurityManager;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ThreadContext;
 import org.glassfish.jersey.client.ClientConfig;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.ws.rs.client.Client;
@@ -35,7 +50,7 @@ import static org.junit.Assert.assertTrue;
 public class PostControllerTest {
 
     @ClassRule
-    public static JettyTestFactory JETTY_FACTORY = new JettyTestFactory();
+    public static JettyTestFactory testFactory = new JettyTestFactory();
 
     @Inject
     private TemplatePathResolver templatePathResolver;
@@ -45,6 +60,10 @@ public class PostControllerTest {
 
     private Client client;
 
+    private static BQRuntime runtime;
+
+    private static DefaultSecurityManager sm;
+
     @BeforeClass
     public static void setupClass() {
         try {
@@ -53,13 +72,22 @@ public class PostControllerTest {
             e.printStackTrace();
         }
 
-        JETTY_FACTORY.app()
+        Package pkg = PostController.class.getPackage();
+        runtime = testFactory.app()
                 .autoLoadModules()
                 .args(YAML_CONFIG)
-                .module(binder -> JerseyModule.extend(binder).addResource(PostController.class))
-                .module(b -> ShiroModule.extend(b).addRealm(new NixmashRealm(userService)))
+                .module(binder -> JerseyModule.extend(binder).addPackage(pkg))
+                .module(b -> b.bind(UserService.class).to(UserServiceImpl.class))
+                .module(b -> b.bind(UsersDb.class).to(UsersDbImpl.class))
+                .module(b -> b.bind(IConnection.class).to(MySqlConnection.class))
+                .module(b -> ShiroModule.extend(b).addRealm(NixmashRealm.class))
                 .start();
 
+        userService = runtime.getInstance(UserService.class);
+
+        sm = new DefaultSecurityManager();
+        SecurityUtils.setSecurityManager(sm);
+        ThreadContext.bind(sm);
     }
 
     @Before
@@ -69,7 +97,6 @@ public class PostControllerTest {
 
         ClientConfig config = new ClientConfig();
         this.client = ClientBuilder.newClient(config);
-
     }
 
     /**
@@ -78,10 +105,14 @@ public class PostControllerTest {
      */
     @Test
     public void getPostsPageTest() throws Exception {
+
+        // TODO: authenticate user for jetty tests. i.e., next 2 lines have no purpose
+        Subject subject = new Subject.Builder(runtime.getInstance(SecurityManager.class)).buildSubject();
+        subject.login(new UsernamePasswordToken("bob", "password"));
+
         WebTarget target = client.target(TEST_URL + "/posts");
         Response response = target.request().get();
-        assertTrue(response.readEntity(String.class).contains("<h1>Posts</h1>"));
+        assertTrue(response.readEntity(String.class).contains("<meta name='page_key' content='login'/>"));
     }
-
 
 }

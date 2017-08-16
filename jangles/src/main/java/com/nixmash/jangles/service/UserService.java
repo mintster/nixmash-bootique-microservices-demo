@@ -8,6 +8,8 @@ import org.apache.shiro.subject.Subject;
 import java.util.List;
 
 public interface UserService {
+    List<User> getUsers();
+
     User createUser(User user);
     User getUser(String username);
     List<Role> getRoles(Long userId);
