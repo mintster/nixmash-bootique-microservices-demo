@@ -1,5 +1,6 @@
 package com.nixmash.web.rest;
 
+import com.google.common.io.BaseEncoding;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -20,11 +21,17 @@ import io.bootique.jetty.test.junit.JettyTestFactory;
 import io.bootique.shiro.ShiroModule;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.support.SubjectThreadState;
 import org.apache.shiro.util.ThreadContext;
+import org.apache.shiro.util.ThreadState;
+import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -37,6 +44,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.nixmash.jangles.utils.JanglesUtils.configureTestDb;
 import static com.nixmash.web.utils.TestUtils.TEST_URL;
@@ -48,6 +56,8 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(GuiceJUnit4Runner.class)
 public class PostControllerTest {
+
+    BasicHttpAuthenticationFilter testFilter;
 
     @ClassRule
     public static JettyTestFactory testFactory = new JettyTestFactory();
@@ -63,7 +73,7 @@ public class PostControllerTest {
     private static BQRuntime runtime;
 
     private static DefaultSecurityManager sm;
-
+    protected AtomicReference<String> sessionCookie = new AtomicReference<>();
     @BeforeClass
     public static void setupClass() {
         try {
@@ -82,7 +92,6 @@ public class PostControllerTest {
                 .module(b -> b.bind(IConnection.class).to(MySqlConnection.class))
                 .module(b -> ShiroModule.extend(b).addRealm(NixmashRealm.class))
                 .start();
-
         userService = runtime.getInstance(UserService.class);
 
         sm = new DefaultSecurityManager();
@@ -99,20 +108,53 @@ public class PostControllerTest {
         this.client = ClientBuilder.newClient(config);
     }
 
+
     /**
-     *
-     *  "/posts" will display the posts.html page
+     * "/posts" should display the posts.html page w/authenticated user but does not...
      */
     @Test
     public void getPostsPageTest() throws Exception {
-
-        // TODO: authenticate user for jetty tests. i.e., next 2 lines have no purpose
+        // TODO: this is shit
         Subject subject = new Subject.Builder(runtime.getInstance(SecurityManager.class)).buildSubject();
         subject.login(new UsernamePasswordToken("bob", "password"));
 
+        // TODO: this too
+        ThreadState threadState = new SubjectThreadState(subject);
+        threadState.bind();
+
+        Session session = subject.getSession();
+
+        // TODO: this too
+        subject.execute(new Runnable() {
+            public void run() {
+                WebTarget target = client.target(TEST_URL + "/posts")
+                        .property("Content-Type", "application/x-www-form-urlencoded")
+                        .property("Authorization", "Basic " + BaseEncoding.base64().encode("bob:password".getBytes()))
+                        .property("Host", "localhost");
+                Response response = target.request()
+                        .header("Authorization", createAuthorizationHeader("bob", "password"))
+                        .header("Content-Type", "application/x-www-form-urlencoded")
+                        .header("Host","localhost")
+                        .get();
+                assertTrue(response.readEntity(String.class).contains("<meta name='page_key' content='login'/>"));
+            }
+        });
+
+        // TODO: and this
+        HttpAuthenticationFeature auth = HttpAuthenticationFeature.basic("bob", "password");
+        client.register(auth);
+
+        // TODO: these redirect to /login with no awareness of Shiro Principal
         WebTarget target = client.target(TEST_URL + "/posts");
-        Response response = target.request().get();
+        Response response = target.request()
+                .header("Authorization", createAuthorizationHeader("bob", "password"))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .header("Host","localhost").get();
         assertTrue(response.readEntity(String.class).contains("<meta name='page_key' content='login'/>"));
+
     }
 
+    private String createAuthorizationHeader(String username, String password) {
+        return "Basic " + new String(Base64.encode((username + ":" + password).getBytes()));
+    }
 }
