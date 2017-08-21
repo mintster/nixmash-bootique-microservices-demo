@@ -13,5 +13,5 @@ public interface UserService {
     User createUser(User user);
     User getUser(String username);
     List<Role> getRoles(Long userId);
-    CurrentUser createCurrentUser(Subject subject);
+    CurrentUser getCurrentUser(Subject subject);
 }

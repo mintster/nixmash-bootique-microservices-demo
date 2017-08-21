@@ -75,7 +75,7 @@ public class LoginController {
         try {
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
-            subject.getSession().setAttribute(CURRENT_USER, userService.createCurrentUser(subject));
+            subject.getSession().setAttribute(CURRENT_USER, userService.getCurrentUser(subject));
         } catch (AuthenticationException e) {
             log.debug("Error authenticating.", e);
             URI targetURIForRedirection = new URI("/login");

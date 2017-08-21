@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.inject.Inject;
 import com.nixmash.jangles.core.JanglesCache;
 import com.nixmash.jangles.core.JanglesGlobals;
-import com.nixmash.jangles.model.JanglesUser;
+import com.nixmash.jangles.json.JanglesUser;
 import com.nixmash.web.exceptions.RestProcessingException;
 
 import javax.ws.rs.ProcessingException;

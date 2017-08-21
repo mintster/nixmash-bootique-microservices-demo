@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public CurrentUser createCurrentUser(Subject subject) {
+    public CurrentUser getCurrentUser(Subject subject) {
         User user = this.getUser(subject.getPrincipals().toString());
         CurrentUser currentUser = new CurrentUser(user);
         List<Role> roles = this.getRoles(user.getUserId());

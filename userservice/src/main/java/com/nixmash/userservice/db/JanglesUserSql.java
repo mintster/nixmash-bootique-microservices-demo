@@ -1,6 +1,6 @@
 package com.nixmash.userservice.db;
 
-import com.nixmash.jangles.model.JanglesUser;
+import com.nixmash.jangles.json.JanglesUser;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by daveburke on 6/22/17.
  */
-public interface UserSql {
+public interface JanglesUserSql {
 
     // region Users
 

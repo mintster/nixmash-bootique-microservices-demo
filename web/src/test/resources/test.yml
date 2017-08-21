@@ -15,6 +15,7 @@ shiroweb:
   urls:
     "/admin" : roles[admin]
     "/posts"   : authc
+    "/users" : anon
     "/login" : anon
     "/" : anon
     "/unauthorized" : anon

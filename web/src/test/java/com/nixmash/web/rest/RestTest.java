@@ -3,7 +3,7 @@ package com.nixmash.web.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.inject.Inject;
-import com.nixmash.jangles.model.JanglesUser;
+import com.nixmash.jangles.json.JanglesUser;
 import com.nixmash.web.auth.NixmashRealm;
 import com.nixmash.web.exceptions.RestProcessingException;
 import com.nixmash.jangles.service.UserService;

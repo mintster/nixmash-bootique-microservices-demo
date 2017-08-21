@@ -1,7 +1,7 @@
 package com.nixmash.web.rest;
 
 import com.google.inject.Inject;
-import com.nixmash.jangles.model.JanglesUser;
+import com.nixmash.jangles.json.JanglesUser;
 import com.nixmash.web.exceptions.RestProcessingException;
 import com.nixmash.web.service.UserClientServiceImpl;
 import org.junit.Before;

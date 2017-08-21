@@ -6,7 +6,7 @@ import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nixmash.jangles.db.cn.IConnection;
-import com.nixmash.jangles.model.JanglesUser;
+import com.nixmash.jangles.json.JanglesUser;
 import com.nixmash.userservice.resource.UserResource;
 import com.nixmash.userservice.guice.TestConnection;
 import com.nixmash.userservice.guice.UserServiceTestModule;

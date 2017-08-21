@@ -57,3 +57,17 @@ CREATE TABLE jangles_users (
   is_active TINYINT (1) DEFAULT NULL,
   PRIMARY KEY (user_id)
 )
+
+CREATE TABLE user_data (
+  user_id BIGINT NOT NULL PRIMARY KEY,
+  login_attempts INT DEFAULT '0' NOT NULL,
+  lastlogin_datetime TIMESTAMP NULL,
+  created_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  approved_datetime TIMESTAMP NULL,
+  invited_datetime TIMESTAMP NULL,
+  accepted_datetime TIMESTAMP NULL,
+  invited_by_id BIGINT DEFAULT '0' NOT NULL,
+  ip VARCHAR (25) NULL,
+  CONSTRAINT user_data_user_id_uindex UNIQUE (user_id),
+  CONSTRAINT user_data_users_fk FOREIGN KEY (user_id) REFERENCES users (user_id)
+);

@@ -3,8 +3,8 @@ package com.nixmash.userservice.service;
 import com.google.inject.Inject;
 import com.nixmash.jangles.core.JanglesCache;
 import com.nixmash.jangles.core.JanglesConfiguration;
-import com.nixmash.jangles.model.JanglesUser;
-import com.nixmash.userservice.db.UserSqlImpl;
+import com.nixmash.jangles.json.JanglesUser;
+import com.nixmash.userservice.db.JanglesUserSqlImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,17 +12,17 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserServiceImpl implements UserService {
+public class JanglesUserServiceImpl implements JanglesUserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JanglesUserServiceImpl.class);
 
     JanglesCache janglesCache;
     JanglesConfiguration janglesConfiguration;
-    UserSqlImpl userSql;
+    JanglesUserSqlImpl janglesUserSql;
 
     @Inject
-    public UserServiceImpl(UserSqlImpl userSql, JanglesCache janglesCache, JanglesConfiguration janglesConfiguration) {
-        this.userSql = userSql;
+    public JanglesUserServiceImpl(JanglesUserSqlImpl janglesUserSql, JanglesCache janglesCache, JanglesConfiguration janglesConfiguration) {
+        this.janglesUserSql = janglesUserSql;
         this.janglesCache = janglesCache;
         this.janglesConfiguration = janglesConfiguration;
     }
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         List<JanglesUser> janglesUsers = (List<JanglesUser>) janglesCache.get(key);
         if (janglesUsers == null || !useCached) {
             try {
-                janglesUsers = userSql.getJanglesUsers();
+                janglesUsers = janglesUserSql.getJanglesUsers();
             } catch (SQLException e) {
                 logger.error(e.getMessage());
             }
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
     public JanglesUser getJanglesUser(Long userId) {
         JanglesUser janglesUser = null;
         try {
-            janglesUser = userSql.getJanglesUser(userId);
+            janglesUser = janglesUserSql.getJanglesUser(userId);
         } catch (SQLException e) {
             logger.error("JanglesUser with id " + userId + " not found!");
             return null;
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public JanglesUser createJanglesUser(JanglesUser janglesUser) {
         Long userId = -1L;
-        userId = userSql.createJanglesUser(janglesUser);
+        userId = janglesUserSql.createJanglesUser(janglesUser);
         janglesCache.remove(janglesUsersCacheKey());
         return getJanglesUser(userId);
     }

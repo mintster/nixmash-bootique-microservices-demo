@@ -1,7 +1,7 @@
 package com.nixmash.web.controller;
 
 import com.google.inject.Inject;
-import com.nixmash.jangles.model.JanglesUser;
+import com.nixmash.jangles.json.JanglesUser;
 import com.nixmash.web.core.WebUI;
 import com.nixmash.web.exceptions.RestProcessingException;
 import com.nixmash.web.resolvers.TemplatePathResolver;

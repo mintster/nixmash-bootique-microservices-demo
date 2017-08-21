@@ -1,7 +1,7 @@
 package com.nixmash.userservice.resource;
 
 import com.google.inject.Inject;
-import com.nixmash.jangles.model.ServiceDescription;
+import com.nixmash.jangles.json.ServiceDescription;
 import com.nixmash.userservice.core.UserServiceConfig;
 
 import javax.ws.rs.GET;

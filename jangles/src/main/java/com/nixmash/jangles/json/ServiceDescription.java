@@ -1,4 +1,4 @@
-package com.nixmash.jangles.model;
+package com.nixmash.jangles.json;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;

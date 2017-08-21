@@ -14,3 +14,5 @@ INSERT INTO roles (role_id, permission, role_name) VALUES (2, 'nixmash:view', 'u
 INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);
 INSERT INTO user_roles (user_id, role_id) VALUES (1, 2);
 INSERT INTO user_roles (user_id, role_id) VALUES (2, 2);
+
+INSERT INTO user_data (user_id) SELECT user_id from users;

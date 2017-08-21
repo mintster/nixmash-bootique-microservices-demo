@@ -5,9 +5,9 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.nixmash.jangles.core.JanglesCache;
 import com.nixmash.jangles.core.JanglesConfiguration;
-import com.nixmash.jangles.model.JanglesUser;
+import com.nixmash.jangles.json.JanglesUser;
 import com.nixmash.userservice.guice.UserServiceTestModule;
-import com.nixmash.userservice.service.UserServiceImpl;
+import com.nixmash.userservice.service.JanglesUserServiceImpl;
 import com.nixmash.userservice.utils.TestUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -45,7 +45,7 @@ public class DatabaseTest {
     private JanglesCache janglesCache;
 
     @Inject
-    private UserServiceImpl userService;
+    private JanglesUserServiceImpl userService;
 
     @Before
     public void setupMethod() {
@@ -73,7 +73,7 @@ public class DatabaseTest {
         assertTrue(janglesConfiguration.testDbConnectionName.contains("test"));
     }
 
-    // region UserServiceImpl CRUD and Cache Tests
+    // region JanglesUserServiceImpl CRUD and Cache Tests
 
     @Test
     public void showUsersLinkTest() {

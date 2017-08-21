@@ -1,6 +1,6 @@
 package com.nixmash.web.utils;
 
-import com.nixmash.jangles.model.JanglesUser;
+import com.nixmash.jangles.json.JanglesUser;
 import org.apache.commons.lang3.StringUtils;
 
 /**

@@ -3,7 +3,7 @@ package com.nixmash.userservice.db;
 import com.google.inject.Inject;
 import com.nixmash.jangles.db.cn.IConnection;
 import com.nixmash.jangles.db.JanglesSql;
-import com.nixmash.jangles.model.JanglesUser;
+import com.nixmash.jangles.json.JanglesUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,15 +13,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserSqlImpl extends JanglesSql implements UserSql {
+public class JanglesUserSqlImpl extends JanglesSql implements JanglesUserSql {
 
     IConnection iConnection;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserSqlImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JanglesUserSqlImpl.class);
 
 
     @Inject
-    public UserSqlImpl(IConnection iConnection) {
+    public JanglesUserSqlImpl(IConnection iConnection) {
         super(iConnection);
     }
 

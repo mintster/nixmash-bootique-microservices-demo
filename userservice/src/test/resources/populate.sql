@@ -58,6 +58,23 @@ CREATE TABLE jangles_users (
   PRIMARY KEY (user_id)
 );
 
+DROP TABLE
+IF EXISTS user_data;
+
+CREATE TABLE user_data (
+  user_id BIGINT NOT NULL PRIMARY KEY,
+  login_attempts INT DEFAULT '0' NOT NULL,
+  lastlogin_datetime TIMESTAMP NULL,
+  created_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  approved_datetime TIMESTAMP NULL,
+  invited_datetime TIMESTAMP NULL,
+  accepted_datetime TIMESTAMP NULL,
+  invited_by_id BIGINT DEFAULT '0' NOT NULL,
+  ip VARCHAR (25) NULL,
+  CONSTRAINT user_data_user_id_uindex UNIQUE (user_id),
+  CONSTRAINT user_data_users_fk FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
 INSERT INTO jangles_users (user_id, username, password, display_name, date_created, is_active) VALUES (1, 'Bopper', 'password', 'Bopper Johnson', '2017-05-29 09:56:25', 1);
 INSERT INTO jangles_users (user_id, username, password, display_name, date_created, is_active) VALUES (2, 'Bipper', 'password', 'Bipper Blaster', '2017-05-29 09:56:45', 1);
 INSERT INTO jangles_users (user_id, username, password, display_name, date_created, is_active) VALUES (3, 'Smoker', 'password', 'Smoker Sql', '2017-05-29 09:57:06', 1);
@@ -74,3 +91,5 @@ INSERT INTO roles (role_id, permission, role_name) VALUES (2, 'nixmash:view', 'u
 INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);
 INSERT INTO user_roles (user_id, role_id) VALUES (1, 2);
 INSERT INTO user_roles (user_id, role_id) VALUES (2, 2);
+
+INSERT INTO user_data (user_id) SELECT user_id from users;

@@ -1,9 +1,8 @@
 package com.nixmash.userservice.resource;
 
 import com.google.inject.Inject;
-import com.nixmash.jangles.db.cn.IConnection;
-import com.nixmash.jangles.model.JanglesUser;
-import com.nixmash.userservice.service.UserServiceImpl;
+import com.nixmash.jangles.json.JanglesUser;
+import com.nixmash.userservice.service.JanglesUserServiceImpl;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,12 +15,10 @@ import java.util.List;
 @Path("/users")
 public class UserResource extends Application {
 
-	private final IConnection iConnection;
-	private final UserServiceImpl userService;
+	private final JanglesUserServiceImpl userService;
 
 	@Inject
-	public UserResource(IConnection iConnection, UserServiceImpl userService) {
-		this.iConnection= iConnection;
+	public UserResource(JanglesUserServiceImpl userService) {
 		this.userService = userService;
 	}
 
