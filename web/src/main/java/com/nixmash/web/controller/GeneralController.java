@@ -55,4 +55,11 @@ public class GeneralController {
         return Response.seeOther(targetURIForRedirection).build();
     }
 
+    @GET
+    @Path("/authorized")
+    public String authorizationCallback() {
+        Map<String, Object> model = new HashMap<>();
+        model.put("pageinfo", webUI.getPageInfo(HOME_PAGE));
+        return templatePathResolver.populateTemplate("home.html", model);
+    }
 }

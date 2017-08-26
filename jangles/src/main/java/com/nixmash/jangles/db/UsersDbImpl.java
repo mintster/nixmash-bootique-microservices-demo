@@ -19,19 +19,18 @@ public class UsersDbImpl extends JanglesSql implements UsersDb {
 
     private static final Logger logger = LoggerFactory.getLogger(UsersDbImpl.class);
 
-
     @Inject
     public UsersDbImpl(IConnection iConnection) {
         super(iConnection);
     }
 
-
     @Override
     public List<Role> getRoles(Long userId) throws SQLException {
         List<Role> roles = new ArrayList<>();
         try {
-            ResultSet rs = sqlQuery("SELECT roles.role_id, roles.permission, roles.role_name FROM  user_roles " +
-                    "INNER JOIN roles ON user_roles.role_id = roles.role_id WHERE user_roles.user_id ='" + userId + "'");
+            ResultSet rs = sqlQuery("SELECT r.role_id, r.permission, r.role_name " +
+                    "FROM  user_roles ur  INNER JOIN roles r ON ur.role_id = r.role_id " +
+                    "WHERE ur.user_id ='" + userId + "'");
             while (rs.next()) {
                 roles.add(new Role(rs.getInt(1), rs.getString("permission"), rs.getString("role_name")));
             }
@@ -47,7 +46,7 @@ public class UsersDbImpl extends JanglesSql implements UsersDb {
     public User getUser(String username) throws SQLException {
         {
             User user = new User();
-            try (CallableStatement cs = sqlCall("SELECT * FROM users WHERE username  = ?")) {
+            try (CallableStatement cs = sqlCall("SELECT * FROM v_users WHERE username  = ?")) {
                 cs.setString(1, username);
                 ResultSet rs = cs.executeQuery();
                 while (rs.next()) {
@@ -67,7 +66,7 @@ public class UsersDbImpl extends JanglesSql implements UsersDb {
     public List<User> getUsers() throws SQLException {
         {
             List<User> users = new ArrayList<>();
-            ResultSet rs = sqlQuery("SELECT * FROM users ORDER BY user_id");
+            ResultSet rs = sqlQuery("SELECT * FROM v_users ORDER BY user_id");
             User user = null;
             while (rs.next()) {
                 user = new User();
@@ -78,6 +77,7 @@ public class UsersDbImpl extends JanglesSql implements UsersDb {
             return users;
         }
     }
+
     @Override
     public User addUser(User user) throws SQLException {
         try (CallableStatement cs = sqlCall("INSERT INTO users (username, email, first_name, last_name, password) VALUES " +
@@ -93,6 +93,7 @@ public class UsersDbImpl extends JanglesSql implements UsersDb {
                 if (generatedKeys.next()) {
                     user.setUserId(generatedKeys.getLong(1));
                 }
+                sqlCall("INSERT INTO user_data (user_id) VALUES (" + user.getUserId() + ")").execute();
             }
         } catch (SQLException e) {
             logger.info("Error creating new user: " + e.getMessage());
@@ -102,19 +103,35 @@ public class UsersDbImpl extends JanglesSql implements UsersDb {
         return user;
     }
 
+    // region Populate
 
-    // region Populate List Objects from ResultSets
 
-    private void populateUser(ResultSet rs, User user) throws SQLException {
+    public void populateUser(ResultSet rs, User user)
+            throws SQLException {
         user.setUserId(rs.getLong("user_id"));
         user.setUsername(rs.getString("username"));
         user.setEmail(rs.getString("email"));
-        user.setPassword(rs.getString("password"));
         user.setFirstName(rs.getString("first_name"));
         user.setLastName(rs.getString("last_name"));
         user.setEnabled(rs.getBoolean("enabled"));
-    }
+        user.setAccountExpired(rs.getBoolean("account_expired"));
+        user.setAccountLocked(rs.getBoolean("account_locked"));
+        user.setCredentialsExpired(rs.getBoolean("credentials_expired"));
+        user.setHasAvatar(rs.getBoolean("has_avatar"));
+        user.setUserKey(rs.getString("user_key"));
+        user.setProviderId(rs.getString("provider_id"));
+        user.setPassword(rs.getString("password"));
+        user.setVersion(rs.getInt("version"));
+        user.setLoginAttempts(rs.getInt("login_attempts"));
+        user.setLastloginDatetime(rs.getTimestamp("lastlogin_datetime"));
+        user.setCreatedDatetime(rs.getTimestamp("created_datetime"));
+        user.setApprovedDatetime(rs.getTimestamp("approved_datetime"));
+        user.setInvitedDatetime(rs.getTimestamp("invited_datetime"));
+        user.setAcceptedDatetime(rs.getTimestamp("accepted_datetime"));
+        user.setInvitedById(rs.getLong("invited_by_id"));
+        user.setIp(rs.getString("ip"));
 
+    }
     // endregion
 
 }

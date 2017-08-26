@@ -1,0 +1,9 @@
+jetty:
+  connector:
+    port: 8000
+
+jersey:
+  urlPattern: /*
+
+
+

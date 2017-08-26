@@ -1,7 +1,7 @@
-PAGE_ID,PAGE_KEY,PAGE_TITLE,HEADING,SUBHEADING,NAVBAR_ACTIVEMENU
+PAGE_ID,PAGE_KEY,PAGE_TITLE,HEADING,SUBHEADING,NAVBAR_MENU
 1,home,Home Page,*,*,*
 2,users,Users,Users List,Retrieved from Users Microservice with REST,users
-3,error,Error Page,Oops!,*,posts
+3,error,Error Page,Oops!,*,*
 4,posts,Posts,Posts,Posts Possible,posts
 5,login,Login,Please Login,*,*
 

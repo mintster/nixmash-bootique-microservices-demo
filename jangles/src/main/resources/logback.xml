@@ -19,7 +19,7 @@
     </appender>
 
     <logger name="com.nixmash.jangles" level="info"/>
-    <logger name="com.nixmash.userservice.service" level="info"/>
+    <logger name="com.nixmash.postservice.service" level="info"/>
     <logger name="org.apache.jcs.engine" level="off"/>
 
     <root level="off">

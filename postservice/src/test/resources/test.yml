@@ -1,0 +1,19 @@
+jetty:
+  connector:
+    port: 8001
+  params:
+    a: a1
+    b: b2
+
+jersey:
+  urlPattern: /*
+
+shiro:
+  realms:
+  -
+    nixmashRealm
+
+shiroweb:
+  urls:
+    "/admin" : perms[\"admin\"]
+    "/pub"   : anon

@@ -17,3 +17,5 @@ shiroweb:
     "/login" : anon
     "/" : anon
     "/unauthorized" : anon
+    "/authorized" : anon
+
