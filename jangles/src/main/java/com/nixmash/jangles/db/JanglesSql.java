@@ -2,6 +2,7 @@ package com.nixmash.jangles.db;
 
 import com.nixmash.jangles.db.cn.IConnection;
 import com.nixmash.jangles.db.cn.JanglesConnection;
+import org.apache.tomcat.jdbc.pool.DataSource;
 
 import java.sql.*;
 
@@ -27,9 +28,17 @@ public abstract class JanglesSql {
     // region MySQL Connection and Query Processes
 
     private Connection sqlConnection() throws ClassNotFoundException, SQLException {
-        JanglesConnection janglesConnection = new JanglesConnection();
         JanglesConnection cn = iConnection.get();
-        return DriverManager.getConnection(cn.getUrl(), cn.getUsername(), cn.getPassword());
+        DataSource ds = new DataSource();
+        ds.setDriverClassName(cn.getDriver());
+        ds.setUrl(cn.getUrl());
+        ds.setUsername(cn.getUsername());
+        ds.setPassword(cn.getPassword());
+        ds.setValidationQuery("SELECT 1");
+        ds.setValidationInterval(34000);
+        ds.setTestOnBorrow(true);
+        ds.setTestWhileIdle(true);
+        return ds.getConnection();
     }
 
     protected ResultSet sqlQuery(String query) {

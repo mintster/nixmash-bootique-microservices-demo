@@ -17,7 +17,6 @@
 
     <modules>
         <module>userservice</module>
-        <module>postservice</module>
         <module>jangles</module>
         <module>web</module>
     </modules>

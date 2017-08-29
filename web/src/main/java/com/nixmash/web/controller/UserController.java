@@ -9,7 +9,6 @@ import com.nixmash.web.service.UserClientService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,8 +51,7 @@ public class UserController {
             return webUI.errorPage(e);
         }
 
-        Map<String, Object> model = new HashMap<>();
-        model.put("pageinfo", webUI.getPageInfo(USERS_PAGE));
+        Map<String, Object> model = webUI.getBasePageInfo(USERS_PAGE);
         model.put("users", users);
         return templatePathResolver.populateTemplate("users.html", model);
     }

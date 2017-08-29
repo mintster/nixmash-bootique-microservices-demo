@@ -19,7 +19,8 @@
                 </li>
             </ul>
             <div class="navbar-right">
-                <a class="navbar-text margin-5" href="/login">Login</a>
+                {{^user}}<a class="navbar-text margin-5" href="/login">Login</a>{{/user}}
+                {{#user}}<span class="navbar-text">Welcome {{displayName}}!</span>{{/user}}
             </div>
         </div>
     </div>

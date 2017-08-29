@@ -8,7 +8,8 @@ public class JanglesConnection implements java.io.Serializable {
 
     private static final long serialVersionUID = 1268527199886230105L;
 
-    public JanglesConnection() {};
+    public JanglesConnection() {
+    }
 
     // region Properties
 
@@ -16,8 +17,9 @@ public class JanglesConnection implements java.io.Serializable {
     private String environment;
     private String username;
     private String password;
-    private String urlbase;
+    private String url;
     private String database;
+    private String driver;
 
     // endregion
 
@@ -55,12 +57,12 @@ public class JanglesConnection implements java.io.Serializable {
         this.password = password;
     }
 
-    public String getUrlbase() {
-        return urlbase;
+    public String getUrl() {
+        return url;
     }
 
-    public void setUrlbase(String urlbase) {
-        this.urlbase = urlbase;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getDatabase() {
@@ -71,8 +73,12 @@ public class JanglesConnection implements java.io.Serializable {
         this.database = database;
     }
 
-    public String getUrl() {
-        return this.urlbase + this.database;
+    public String getDriver() {
+        return driver;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
     }
 
     // endregion
@@ -84,8 +90,9 @@ public class JanglesConnection implements java.io.Serializable {
                 ", environment='" + environment + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", urlbase='" + urlbase + '\'' +
+                ", url='" + url + '\'' +
                 ", database='" + database + '\'' +
+                ", driver='" + driver + '\'' +
                 '}';
     }
 }

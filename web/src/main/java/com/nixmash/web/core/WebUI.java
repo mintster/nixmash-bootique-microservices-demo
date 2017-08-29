@@ -4,14 +4,19 @@ import com.github.mustachejava.functions.TranslateBundleFunction;
 import com.google.inject.Inject;
 import com.nixmash.jangles.core.JanglesCache;
 import com.nixmash.jangles.core.JanglesGlobals;
+import com.nixmash.jangles.dto.CurrentUser;
 import com.nixmash.web.dto.PageInfo;
 import com.nixmash.web.enums.ActiveMenu;
 import com.nixmash.web.exceptions.RestProcessingException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.LocaleUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 
 import java.io.*;
 import java.util.*;
+
+import static com.nixmash.jangles.service.UserServiceImpl.CURRENT_USER;
 
 /**
  * Created by daveburke on 7/1/17.
@@ -168,6 +173,17 @@ public class WebUI implements Serializable {
         model.put("pageinfo", getPageInfo(ERROR_PAGE));
         model.put("errorMessage", e.getMsg());
         return webContext.templatePathResolver().populateTemplate("error.html", model);
+    }
+
+    public Map<String, Object> getBasePageInfo(String pageId) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("pageinfo", getPageInfo(pageId));
+
+        Session session = SecurityUtils.getSubject().getSession();
+        if (SecurityUtils.getSubject().getPrincipals() != null)
+            model.put("user", (CurrentUser) session.getAttribute(CURRENT_USER));
+
+        return model;
     }
 
     // endregion

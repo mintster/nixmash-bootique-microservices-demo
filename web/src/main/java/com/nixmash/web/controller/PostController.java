@@ -7,7 +7,6 @@ import com.nixmash.web.service.UserClientService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,8 +40,7 @@ public class PostController {
 
     @GET
     public String getPostsPage() {
-        Map<String, Object> model = new HashMap<>();
-        model.put("pageinfo", webUI.getPageInfo(POSTS_PAGE));
+        Map<String, Object> model = webUI.getBasePageInfo(POSTS_PAGE);
         return templatePathResolver.populateTemplate("posts.html", model);
     }
 

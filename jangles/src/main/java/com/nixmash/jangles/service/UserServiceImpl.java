@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService{
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> getUsers() {
-        List<User> users = null;
+        List<User> users = new ArrayList<>();
         try {
             users = usersDb.getUsers();
         } catch (SQLException e) {}

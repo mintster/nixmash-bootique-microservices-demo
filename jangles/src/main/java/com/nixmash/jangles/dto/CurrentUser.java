@@ -14,6 +14,7 @@ public class CurrentUser implements Serializable{
     private Set<String> roles = new HashSet<>();
     private Set<String> permissions = new HashSet<>();
     private Boolean isAdministrator = false;
+    private String displayName;
 
     public CurrentUser() {
     }
@@ -22,6 +23,7 @@ public class CurrentUser implements Serializable{
         this.userId = user.getUserId();
         this.username = user.getUsername();
         this.email = user.getEmail();
+        this.displayName = user.getFirstName() + " " + user.getLastName();
     }
 
     // region getter setter
@@ -74,6 +76,14 @@ public class CurrentUser implements Serializable{
         isAdministrator = administrator;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
     // endregion
 
 
@@ -83,6 +93,7 @@ public class CurrentUser implements Serializable{
                 "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
+                ", displayName='" + displayName + '\'' +
                 ", roles=" + roles +
                 ", permissions=" + permissions +
                 '}';

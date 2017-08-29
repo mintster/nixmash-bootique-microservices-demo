@@ -9,7 +9,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -43,8 +42,7 @@ public class GeneralController {
 
     @GET
     public String home() {
-        Map<String, Object> model = new HashMap<>();
-        model.put("pageinfo", webUI.getPageInfo(HOME_PAGE));
+        Map<String, Object> model = webUI.getBasePageInfo(HOME_PAGE);
         return templatePathResolver.populateTemplate("home.html", model);
     }
 
@@ -58,8 +56,7 @@ public class GeneralController {
     @GET
     @Path("/authorized")
     public String authorizationCallback() {
-        Map<String, Object> model = new HashMap<>();
-        model.put("pageinfo", webUI.getPageInfo(HOME_PAGE));
+        Map<String, Object> model = webUI.getBasePageInfo(HOME_PAGE);
         return templatePathResolver.populateTemplate("home.html", model);
     }
 }

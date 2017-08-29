@@ -5,13 +5,13 @@ import com.nixmash.jangles.core.JanglesConnections;
 import com.nixmash.jangles.db.cn.JanglesConnection;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.jdbc.ScriptRunner;
+import org.apache.tomcat.jdbc.pool.DataSource;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
@@ -57,7 +57,12 @@ public class JanglesUtils {
 		String url = janglesConnection.getUrl();
 		String dbuser = janglesConnection.getUsername();
 		String dbpassword = janglesConnection.getPassword();
-		Connection conn = DriverManager.getConnection(url,dbuser, dbpassword);
+		DataSource ds = new DataSource();
+		ds.setDriverClassName(janglesConnection.getDriver());
+		ds.setUrl(janglesConnection.getUrl());
+		ds.setUsername(janglesConnection.getUsername());
+		ds.setPassword(janglesConnection.getPassword());
+		Connection conn = ds.getConnection();
 		Statement st = conn.createStatement();
 		File script = new File(classLoader.getResource(sql).getFile());
 		ScriptRunner sr = new ScriptRunner(conn);
