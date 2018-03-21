@@ -64,13 +64,6 @@ public class JettyTest {
         assertTrue(responseOK(pathResponse("/login")));
     }
 
-    @Test
-    public void postPageTest() {
-        // /posts is restricted to authorized users only. Redirected to /login
-        Response response = pathResponse("/posts");
-        assertTrue(response.readEntity(String.class).contains("<meta name='page_key' content='login'/>"));
-    }
-
     private Response pathResponse(String path) {
         WebTarget base = ClientBuilder.newClient().target("http://localhost:9001");
         return base.path(path).request().get();

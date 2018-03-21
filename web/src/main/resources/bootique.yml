@@ -14,4 +14,3 @@ shiroweb:
   urls:
     "/admin" : roles[admin]
     "/posts"   : authc
-
