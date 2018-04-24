@@ -1,20 +1,16 @@
 package com.nixmash.web.auth;
 
 import com.google.inject.Inject;
-import com.nixmash.jangles.dto.Role;
 import com.nixmash.jangles.dto.User;
 import com.nixmash.jangles.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 public class NixmashRealm extends AuthorizingRealm {
 
@@ -34,15 +30,7 @@ public class NixmashRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-
-        Long userid = userService.getUser(principals.getPrimaryPrincipal().toString()).getUserId();
-        List<Role> roles = userService.getRoles(userid);
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        for (Role role : roles) {
-            info.addStringPermission(role.getPermission());
-            info.addRole(role.getRoleName());
-        }
-        return info;
+        return userService.getAuthorizationInfo(principals);
     }
 
     @Override

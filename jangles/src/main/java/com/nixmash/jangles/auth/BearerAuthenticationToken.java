@@ -4,12 +4,19 @@ import org.apache.shiro.authc.AuthenticationToken;
 
 public class BearerAuthenticationToken implements AuthenticationToken {
 
-    String token;
+    private static final long serialVersionUID = -72116035990993135L;
+
+    private String token;
     private String username;
     private char[] password;
 
     public BearerAuthenticationToken(String token) {
         this.token = token;
+    }
+
+    public BearerAuthenticationToken(String token, String username) {
+        this.token = token;
+        this.username = username;
     }
 
     public String getUsername() {

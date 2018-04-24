@@ -21,6 +21,10 @@ NixMash Microservices
 
 ## NixMash Posts by Branch
 
+### microservices-v0.2.0
+
+- [NixMash : Bearer Token Design in Bootique Shiro for REST Authentication](https://nixmash.com/post/bearer-token-design-in-bootique-shiro-for-rest-authentication)
+
  ### microservices-v0.1.0
  
  - [Multiple Bootique Module Shaded Jars with Maven ](http://nixmash.com/post/multiple-bootique-module-shaded-jars-with-maven)

@@ -7,6 +7,8 @@ import com.nixmash.jangles.dto.CurrentUser;
 import com.nixmash.jangles.dto.Role;
 import com.nixmash.jangles.dto.User;
 import com.nixmash.jangles.enums.JanglesAppId;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
 import java.util.List;
@@ -22,6 +24,8 @@ public interface UserService {
     User getUserByUserKey(String userKey);
 
     CurrentUser getCurrentUser(Subject subject);
+
+    AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals);
 
     BearerAuthenticationToken createBearerToken(CurrentUser currentUser, JanglesAppId appId);
 

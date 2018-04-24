@@ -9,8 +9,11 @@ import com.nixmash.jangles.dto.CurrentUser;
 import com.nixmash.jangles.dto.Role;
 import com.nixmash.jangles.dto.User;
 import com.nixmash.jangles.enums.JanglesAppId;
+import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,15 +111,31 @@ public class UserServiceImpl implements UserService{
 
     // endregion
 
+    // region Shared Authentication Methods
+
+    @Override
+    public AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
+        Long userid = getUser(principals.getPrimaryPrincipal().toString()).getUserId();
+        List<Role> roles = getRoles(userid);
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        for (Role role : roles) {
+            info.addStringPermission(role.getPermission());
+            info.addRole(role.getRoleName());
+        }
+        return info;
+    }
+
+    // endregion
 
     // region Authentication Tokens
 
     @Override
-    public BearerAuthenticationToken createBearerToken(CurrentUser currentUser, JanglesAppId appId) {
-        String userKey = currentUser.getUserKey();
+    public BearerAuthenticationToken createBearerToken(CurrentUser user, JanglesAppId appId) {
+        String userKey = user.getUserKey();
         String serviceApiKey = appId != null ? getServiceApiKey(appId) : String.valueOf(JanglesAppId.NA);
-        String encoded = Base64.encodeToString(MessageFormat.format("{0}:{1}:{2}", userKey, serviceApiKey, appId).getBytes());
-        return new BearerAuthenticationToken(encoded);
+        String encoded = Base64.encodeToString(MessageFormat.format("{0}:{1}:{2}",
+                userKey, serviceApiKey, appId).getBytes());
+        return new BearerAuthenticationToken(encoded, user.getUsername());
     }
 
     @Override

@@ -24,7 +24,8 @@ public class GeneralResource {
 
 
 	@Inject
-	public GeneralResource(UserServiceConfig userServiceConfig, UserService userService, SecurityManager securityManager) {
+	public GeneralResource(UserServiceConfig userServiceConfig,
+                           UserService userService, SecurityManager securityManager) {
 		this.userServiceConfig = userServiceConfig;
 		this.userService = userService;
 		this.securityManager = securityManager;

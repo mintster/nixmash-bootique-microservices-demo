@@ -1,9 +1,7 @@
 package com.nixmash.jangles.auth;
 
 import com.google.inject.Inject;
-import com.nixmash.jangles.core.JanglesGlobals;
 import com.nixmash.jangles.dto.BearerTokenKey;
-import com.nixmash.jangles.dto.Role;
 import com.nixmash.jangles.dto.User;
 import com.nixmash.jangles.service.UserService;
 import org.apache.shiro.authc.AuthenticationException;
@@ -11,21 +9,20 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.MessageFormat;
-import java.util.List;
 
 public class BearerTokenRealm extends AuthorizingRealm {
+
+    // region Constructor
 
     private static final Logger logger = LoggerFactory.getLogger(BearerTokenRealm.class);
 
     private UserService userService;
-    private JanglesGlobals janglesGlobals;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -33,24 +30,16 @@ public class BearerTokenRealm extends AuthorizingRealm {
     }
 
     @Inject
-    public BearerTokenRealm(UserService userService, JanglesGlobals janglesGlobals) {
+    public BearerTokenRealm(UserService userService) {
         setName("bearerTokenRealm");
         this.userService = userService;
-        this.janglesGlobals = janglesGlobals;
-
     }
 
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-
-        Long userid = userService.getUser(principals.getPrimaryPrincipal().toString()).getUserId();
-        List<Role> roles = userService.getRoles(userid);
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        for (Role role : roles) {
-            info.addStringPermission(role.getPermission());
-            info.addRole(role.getRoleName());
-        }
-        return info;
+        return userService.getAuthorizationInfo(principals);
     }
+
+    // endregion
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(
@@ -59,9 +48,9 @@ public class BearerTokenRealm extends AuthorizingRealm {
         BearerAuthenticationToken bearerToken = (BearerAuthenticationToken)token;
         BearerTokenKey bearerTokenKey = userService.decodeBearerToken(bearerToken);
 
-        // TODO: add ApplicationApiKey condition
         if (!userService.isValidApiKey(bearerTokenKey)) {
-            String errMsg = MessageFormat.format("Invalid Api Key [{0}] for [{1}]", bearerTokenKey.getApikey(), bearerTokenKey.getAppId().name());
+            String errMsg = MessageFormat.format("Invalid Api Key [{0}] for [{1}]",
+                    bearerTokenKey.getApikey(), bearerTokenKey.getAppId().name());
             throw new AuthenticationException(errMsg);
         }
 

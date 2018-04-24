@@ -47,8 +47,8 @@ public class UserClientServiceImpl implements UserClientService {
     public String performTokenCheck() {
         String result = null;
         try {
-            BearerAuthenticationToken bearerAuthenticationToken = getBearerAuthenticationToken();
-            result = getRestTokenCheck(String.format("/token/%s", bearerAuthenticationToken.getToken()));
+            BearerAuthenticationToken bearerToken = getBearerAuthenticationToken();
+            result = getRestTokenCheck(String.format("/token/%s", bearerToken.getToken()));
         } catch (RestProcessingException e) {
             e.printStackTrace();
         }
@@ -56,13 +56,13 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     private BearerAuthenticationToken getBearerAuthenticationToken() {
-        BearerAuthenticationToken bearerAuthenticationToken = userService.createAnonymousToken();
+        BearerAuthenticationToken bearerToken = userService.createAnonymousToken();
         Session session = SecurityUtils.getSubject().getSession();
         if (SecurityUtils.getSubject().getPrincipals() != null) {
             CurrentUser currentUser = (CurrentUser) session.getAttribute(CURRENT_USER);
-            bearerAuthenticationToken = userService.createBearerToken(currentUser, JanglesAppId.WEB_CLIENT);
+            bearerToken = userService.createBearerToken(currentUser, JanglesAppId.WEB_CLIENT);
         }
-        return bearerAuthenticationToken;
+        return bearerToken;
     }
 
     // endregion
