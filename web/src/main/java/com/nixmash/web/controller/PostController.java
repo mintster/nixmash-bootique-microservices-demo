@@ -3,7 +3,6 @@ package com.nixmash.web.controller;
 import com.google.inject.Inject;
 import com.nixmash.web.core.WebUI;
 import com.nixmash.web.resolvers.TemplatePathResolver;
-import com.nixmash.web.service.UserClientService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,14 +24,12 @@ public class PostController {
 
     private final TemplatePathResolver templatePathResolver;
     private final WebUI webUI;
-    private final UserClientService userClientService;
 
     @Inject
     public PostController(TemplatePathResolver templatePathResolver,
-                          WebUI webUI, UserClientService userClientService) {
+                          WebUI webUI ) {
         this.templatePathResolver = templatePathResolver;
         this.webUI = webUI;
-        this.userClientService = userClientService;
     }
 
     // endregion

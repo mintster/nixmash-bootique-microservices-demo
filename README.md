@@ -6,7 +6,7 @@ NixMash Microservices
 - **Jetty** - embedded web server
 - **Jersey** - *REST* services for JAX-RS
 - **Jackson** - JSON/POJO binding
-- **Apache Shiro** - user authentication and authorization
+- **Apache Shiro** - user authentication and authorization, including using a BearerAuthenticationToken in REST (v0.2.0)
 - **Google Guice** - injection
 - **Mustache** - the Spullara Java Mustache Implementation for "logic free" templating [(GitHub)](https://github.com/spullara/mustache.java)
 - **Bootstrap** - responsive web theming
@@ -40,7 +40,7 @@ The [Jangles](https://github.com/mintster/jangles) Module sets the application c
 
 1. Create a MySQL database. 
 2. MySQL Setup scripts are located in **jangles:/install/sql.** Run **schema.sql** and **data.sql.**
-3. Copy external files in **jangles:/install/external** to a subdirectory of your **/home/user** directory. Enter the path to those files in **jangles:/resources/jangles.properties** and update the MySQL Connection settings in **connections.xml**.
+3. Copy external files in **/install/external** to a subdirectory of your **/home/user** directory. Enter the path to those files in **jangles:/resources/jangles.properties** and update the MySQL Connection settings in **connections.xml**.
 
 ## Running the Application
 
@@ -100,9 +100,9 @@ The JSON output at `http://localhost:8000/users` would look like this.
 
 ### Web Client
 
-The `Web` client module URL is `http://localhost:9000.`  This is the page with url `http://localhost:9000/users` displaying users from `Users Service`.
+The `Web` client module URL is `http://localhost:9001.`  This is the page with url `http://localhost:9001/users` displaying users from `Users Service`.
 
 ![](http://nixmash.com/x/pics/github/micro0710a.png)
 
-**Last Updated:** *3/21/18*
+**Last Updated:** *4/23/18*
 

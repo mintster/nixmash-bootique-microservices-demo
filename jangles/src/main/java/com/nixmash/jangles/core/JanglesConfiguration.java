@@ -23,6 +23,7 @@ public class JanglesConfiguration implements java.io.Serializable {
 	public String connectionXmlPath;
 	public String globalPropertiesFile;
 	public String currentLocale;
+	public String globalPropertiesPath;
 
     // endregion
 
@@ -31,7 +32,7 @@ public class JanglesConfiguration implements java.io.Serializable {
 		Properties properties = new Properties();
 
 		try {
-			String propertiesFile = !JanglesUtils.isInTestingMode() ? "jangles" : "test";
+			String propertiesFile = !JanglesUtils.isInTestingMode() ? "jangles" : "jangles.test";
 			properties.load(getClass().getResourceAsStream(String.format("/%s.properties", propertiesFile)));
 		} catch (IOException e) {
 			logger.error(e.getMessage());
@@ -44,6 +45,7 @@ public class JanglesConfiguration implements java.io.Serializable {
 		this.connectionXmlPath = user_home + properties.getProperty("connection.xml.path");
 		this.globalPropertiesFile = user_home + properties.getProperty("application.global.properties.file");
 		this.currentLocale = properties.getProperty("application.currentLocale");
+		this.globalPropertiesPath = user_home + properties.getProperty("global.properties.path");
 
 	}
 

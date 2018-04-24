@@ -185,6 +185,5 @@ public class WebUI implements Serializable {
 
         return model;
     }
-
     // endregion
 }

@@ -1,7 +1,7 @@
 jetty:
   staticResourceBase: classpath:static/
   connector:
-    port: 9000
+    port: 9001
 
 mvc:
   templateBase: "classpath:"

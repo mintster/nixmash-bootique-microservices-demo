@@ -103,6 +103,29 @@ public class UsersDbImpl extends JanglesSql implements UsersDb {
         return user;
     }
 
+    @Override
+    public User getUserByUserKey(String userKey) throws SQLException {
+        {
+            User user = new User();
+            try {
+                CallableStatement cs = sqlCall("SELECT * FROM v_users WHERE user_key = ?");
+                cs.setString(1, userKey);
+                ResultSet rs = cs.executeQuery();
+                while (rs.next()) {
+                    user = new User();
+                    populateUser(rs, user);
+                }
+                rs.close();
+                cs.close();
+            } catch (SQLException e) {
+                logger.info("Error getting user by UserKey: " + e.getMessage());
+            } finally {
+                sqlCallClose();
+            }
+            return user;
+        }
+    }
+
     // region Populate
 
 

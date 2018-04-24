@@ -43,16 +43,10 @@ public class JanglesUtils {
 		return false;
 	}
 
-	public static void configureTestDb(String sql) throws FileNotFoundException, SQLException {
-		Properties properties = new Properties();
-		ClassLoader classLoader = JanglesUtils.class.getClassLoader();
-		InputStream inputStream =
-				classLoader.getResourceAsStream("test.properties");
-		try {
-			properties.load(inputStream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public static void configureTestDb(String sql) throws IOException, SQLException {
+
+		JanglesConfiguration janglesConfiguration = new JanglesConfiguration();
+		String sqlScript = janglesConfiguration.globalPropertiesPath + sql;
 		JanglesConnection janglesConnection = getTestConnection();
 		String url = janglesConnection.getUrl();
 		String dbuser = janglesConnection.getUsername();
@@ -64,13 +58,17 @@ public class JanglesUtils {
 		ds.setPassword(janglesConnection.getPassword());
 		Connection conn = ds.getConnection();
 		Statement st = conn.createStatement();
-		File script = new File(classLoader.getResource(sql).getFile());
+		File script = new File(sqlScript);
 		ScriptRunner sr = new ScriptRunner(conn);
 		sr.setLogWriter(null);
 		Reader reader = new BufferedReader(new FileReader(script));
 		sr.runScript(reader);
-
+		reader.close();
+		st.close();
+		ds.close();
+		conn.close();
 	}
+
 
 	@SuppressWarnings({"Duplicates", "ConstantConditions"})
 	private static JanglesConnection getTestConnection() {

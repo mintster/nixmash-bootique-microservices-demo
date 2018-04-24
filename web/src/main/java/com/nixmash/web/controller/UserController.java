@@ -41,6 +41,8 @@ public class UserController {
     // endregion
 
 
+    // region Users
+
     @GET
     public String restUsers() {
 
@@ -50,10 +52,12 @@ public class UserController {
         } catch (RestProcessingException e) {
             return webUI.errorPage(e);
         }
-
         Map<String, Object> model = webUI.getBasePageInfo(USERS_PAGE);
         model.put("users", users);
         return templatePathResolver.populateTemplate("users.html", model);
     }
+
+    //  endregion
+
 
 }

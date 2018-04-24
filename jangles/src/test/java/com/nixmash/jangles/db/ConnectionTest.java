@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import static com.nixmash.jangles.utils.JanglesUtils.configureTestDb;
@@ -32,7 +32,7 @@ public class ConnectionTest {
     public static void setup(){
         try {
             configureTestDb("populate.sql");
-        } catch (FileNotFoundException | SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }

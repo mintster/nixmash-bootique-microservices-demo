@@ -18,7 +18,7 @@ import org.junit.runners.JUnit4;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -61,7 +61,7 @@ public class DatabaseTest {
     public static void setupClass(){
         try {
             configureTestDb("populate.sql");
-        } catch (FileNotFoundException | SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }

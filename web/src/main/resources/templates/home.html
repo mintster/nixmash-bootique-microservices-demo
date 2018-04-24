@@ -30,6 +30,18 @@
     </div>
 </div>
 
+<div class="container">
+    <div class="row">
+        {{^tokenCheck}}
+            <a href="/tokencheck" class="btn btn-lg btn-success">Token Check</a>
+        {{/tokenCheck}}
+        {{#tokenCheck}}
+            <div class="token-check-msg">{{tokenCheck}}</div>
+        {{/tokenCheck}}
+    </div>
+</div>
+
+
 <!-- Footer -->
 {{> templates/partials/footer.html }}
 

@@ -29,6 +29,10 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>io.bootique.shiro</groupId>
+            <artifactId>bootique-shiro</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.bootique.logback</groupId>
             <artifactId>bootique-logback</artifactId>
         </dependency>

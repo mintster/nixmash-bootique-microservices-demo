@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class UsersDbTest {
 
         try {
             configureTestDb("populate.sql");
-        } catch (FileNotFoundException | SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
 

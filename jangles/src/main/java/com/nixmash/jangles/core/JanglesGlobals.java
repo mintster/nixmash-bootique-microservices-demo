@@ -20,6 +20,8 @@ public class JanglesGlobals implements java.io.Serializable {
     public String cloudApplicationId;
     public String apiKeyErrorMessage;
     public String apiKey;
+    public String userServiceApiKey;
+    public String webApiKey;
     public String userServiceUrl;
 
 
@@ -36,6 +38,8 @@ public class JanglesGlobals implements java.io.Serializable {
             this.cloudApplicationId = properties.getProperty("application.cloud.id");
             this.apiKeyErrorMessage = properties.getProperty("api.key.error.message");
             this.apiKey = properties.getProperty("api.key");
+            this.userServiceApiKey = properties.getProperty("userservice.api.key");
+            this.webApiKey = properties.getProperty("web.api.key");
             this.userServiceUrl = properties.getProperty("userservice.url");
 
         } catch (IOException ex) {

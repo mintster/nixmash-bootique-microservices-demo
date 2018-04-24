@@ -11,6 +11,11 @@ body {
     margin-top: 0;
     line-height: 50px;
 }
+.navbar-text.navbar-bar {
+    margin-left: 0;
+    margin-right: 0;
+}
+
 /*</editor-fold>*/
 
 /*<editor-fold desc="Jumbotron">*/

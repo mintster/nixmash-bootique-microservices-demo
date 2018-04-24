@@ -2,6 +2,7 @@ package com.nixmash.postservice.resource;
 
 import com.google.inject.Inject;
 import com.nixmash.jangles.json.JanglesUser;
+import com.nixmash.postservice.service.JanglesUserService;
 import com.nixmash.postservice.service.JanglesUserServiceImpl;
 
 import javax.ws.rs.GET;
@@ -12,26 +13,28 @@ import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/users")
+@Path("/")
 public class UserResource extends Application {
 
-	private final JanglesUserServiceImpl userService;
+    private final JanglesUserService janglesUserService;
 
-	@Inject
-	public UserResource(JanglesUserServiceImpl userService) {
-		this.userService = userService;
-	}
+    @Inject
+    public UserResource(JanglesUserServiceImpl janglesUserService) {
+        this.janglesUserService = janglesUserService;
+    }
 
-	@Path("/{userId}")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public JanglesUser get(@PathParam("userId") long userId) {
-		return  userService.getJanglesUser(userId);
-	}
+    @Path("/users/{userId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public JanglesUser get(@PathParam("userId") long userId) {
+        return janglesUserService.getJanglesUser(userId);
+    }
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<JanglesUser> getAll() {
-		return userService.getJanglesUsers();
-	}
+    @GET
+    @Path("/users")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<JanglesUser> getAll() {
+        return janglesUserService.getJanglesUsers();
+    }
+
 }

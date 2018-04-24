@@ -12,6 +12,9 @@ import java.util.List;
 @ImplementedBy(UserClientServiceImpl.class)
 public interface UserClientService {
 
+    @SuppressWarnings("unchecked")
+    String performTokenCheck();
+
     List<JanglesUser> getRestUsers() throws RestProcessingException;
 
 }

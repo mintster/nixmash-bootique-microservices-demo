@@ -27,7 +27,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,7 +75,7 @@ public class UserControllerTest {
     public static void setupClass() {
         try {
             configureTestDb("populate.sql");
-        } catch (FileNotFoundException | SQLException e) {
+        } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
 

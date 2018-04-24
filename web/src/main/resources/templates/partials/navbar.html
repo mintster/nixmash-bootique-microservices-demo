@@ -17,7 +17,8 @@
             </ul>
             <div class="navbar-right">
                 {{^user}}<a class="navbar-text margin-5" href="/login">Login</a>{{/user}}
-                {{#user}}<span class="navbar-text">Welcome {{displayName}}!</span>{{/user}}
+                {{#user}}<span class="navbar-text">Welcome {{displayName}}!</span><span class="navbar-text navbar-bar">|</span>
+                <a class="navbar-text no-margin" href="/logout">Logout</a>{{/user}}
             </div>
         </div>
     </div>

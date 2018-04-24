@@ -2,12 +2,14 @@ package com.nixmash.postservice;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
+import com.nixmash.jangles.auth.BearerTokenRealm;
 import com.nixmash.jangles.db.cn.IConnection;
 import com.nixmash.jangles.db.cn.MySqlConnection;
 import com.nixmash.postservice.resource.GeneralResource;
 import com.nixmash.postservice.resource.UserResource;
 import io.bootique.Bootique;
 import io.bootique.jersey.JerseyModule;
+import io.bootique.shiro.ShiroModule;
 import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +44,8 @@ public class Launcher implements Module  {
 				.addFeature(DeclarativeLinkingFeature.class);
 
 		binder.bind(IConnection.class).to(MySqlConnection.class);
+		ShiroModule.extend(binder).addRealm(BearerTokenRealm.class);
+
 	}
 
 }

@@ -8,11 +8,6 @@ jetty:
 jersey:
   urlPattern: /*
 
-shiro:
-  realms:
-  -
-    nixmashRealm
-
 shiroweb:
   urls:
     "/admin" : perms[\"admin\"]
